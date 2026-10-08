@@ -1,0 +1,2157 @@
+﻿<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StudyAI</title>
+<style>
+:root{--bg:#f5f6fb;--panel:#fff;--ink:#10152b;--muted:#68708a;--line:#e6e8f0;--purple:#6d4aff;--blue:#2e8bff;--navy:#0d1328;--grad:linear-gradient(135deg,#35227f,#6847ff);--shadow:0 16px 45px rgba(29,22,79,.10)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}.hidden{display:none!important}.app{min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--navy);color:#fff;padding:22px 16px;z-index:20}.brand{font-size:25px;font-weight:900;padding:8px 12px 28px}.brand span{color:#7d62ff}.nav{display:grid;gap:6px}.nav button{background:transparent;color:#dbe0f4;text-align:left;padding:12px 14px;border-radius:12px}.nav button:hover,.nav button.active{background:#6847ff;color:#fff}.nav-bottom{position:absolute;bottom:20px;left:16px;right:16px}.main{margin-left:250px;min-height:100vh;padding:24px 28px 90px}.topbar{display:flex;align-items:center;gap:14px;margin-bottom:24px}.search{flex:1;max-width:600px;position:relative}.search input{width:100%;padding:14px 18px;border:1px solid var(--line);border-radius:15px;background:#fff;outline:none}.user{margin-left:auto;display:flex;align-items:center;gap:10px}.avatar{width:40px;height:40px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;font-weight:800}.hero{background:var(--grad);color:#fff;border-radius:25px;padding:28px 30px;box-shadow:var(--shadow);margin-bottom:24px}.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:0;color:#eeeaff}.btn{padding:11px 16px;border-radius:12px;background:var(--purple);color:#fff;font-weight:800}.btn.light{background:#fff;color:var(--purple)}.btn.ghost{background:#f1efff;color:#5136d5}.btn.danger{background:#ffe9ec;color:#b21d3a}.btn.small{padding:8px 11px;font-size:13px}.grid{display:grid;gap:18px} .courses{grid-template-columns:repeat(3,minmax(0,1fr))}
+.course-card{border-radius:22px;padding:20px;color:#fff;min-height:235px;box-shadow:var(--shadow);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.course-card:after{content:"";position:absolute;width:150px;height:150px;right:-55px;bottom:-65px;border-radius:50%;background:rgba(255,255,255,.10)}
+.course-card:nth-child(4n+1){background:linear-gradient(135deg,#7b45ff,#4d22d9)}
+.course-card:nth-child(4n+2){background:linear-gradient(135deg,#1593ff,#2265e8)}
+.course-card:nth-child(4n+3){background:linear-gradient(135deg,#1fc37b,#0b9b62)}
+.course-card:nth-child(4n){background:linear-gradient(135deg,#ff9b25,#f04430)}
+.course-card .course-kicker{font-size:12px;opacity:.82;text-transform:uppercase;letter-spacing:.08em;font-weight:800;margin-bottom:7px}
+.course-card h3{margin:0 52px 6px;font-size:21px;line-height:1.15}
+.course-card .course-meta{margin:0;color:rgba(255,255,255,.90);font-size:13px}
+.course-card .course-info{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 13px}
+.course-card .course-chip{padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.14);font-size:12px}
+.course-card .course-progress{margin-top:auto}
+.course-card .course-progress-head{display:flex;justify-content:space-between;gap:10px;font-size:12px;margin-bottom:7px}
+.course-card .course-progress .progress{height:8px;background:rgba(255,255,255,.22)}
+.course-card .course-progress .progress i{background:#fff}
+.course-card .course-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px;position:relative;z-index:2}
+.course-card .actions{position:absolute;right:15px;top:15px;display:flex;gap:6px;z-index:3}
+.course-card .actions .btn{box-shadow:0 5px 12px rgba(0,0,0,.10)}
+@media (max-width:1050px){.courses{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.courses{grid-template-columns:1fr}.course-card{min-height:220px}}.section{margin:26px 0}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.section h2{margin:0;font-size:22px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 25px rgba(20,20,50,.04)}.two{grid-template-columns:1.3fr .7fr}.three{grid-template-columns:repeat(3,1fr)}.lesson-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}.lesson-row:last-child{border-bottom:0}.icon{width:40px;height:40px;border-radius:12px;background:#f0edff;color:var(--purple);display:grid;place-items:center;font-weight:900}.grow{flex:1}.muted{color:var(--muted);font-size:13px}.progress{height:10px;background:#eceef5;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:linear-gradient(90deg,#6d4aff,#31c6a2);border-radius:99px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.stat{padding:13px;border:1px solid var(--line);border-radius:15px;background:#fafaff}.stat strong{font-size:25px;line-height:1.1}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:4px}.study-note{margin-top:14px;padding:10px 12px;border-radius:12px;background:#f7f5ff;color:var(--muted);font-size:12px}.recent-lesson{padding:15px 0}.notes-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.notes-search{max-width:420px;width:100%}.notes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.note-card{padding:18px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 6px 18px rgba(39,23,93,.05)}.note-card h3{margin:0 0 6px;font-size:16px}.note-meta{color:var(--muted);font-size:12px;margin-bottom:11px}.note-body{white-space:pre-wrap;line-height:1.55;color:#333;font-size:14px}.note-actions{display:flex;gap:7px;margin-top:14px}@media(max-width:800px){.notes-grid{grid-template-columns:1fr}.notes-toolbar{align-items:stretch;flex-direction:column}.notes-search{max-width:none}}.subject-lessons{display:grid;grid-template-columns:1fr;gap:12px}.subject-lesson{padding:17px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 6px 18px rgba(39,23,93,.05);display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}.subject-lesson .lesson-icon{width:48px;height:48px;border-radius:15px;background:#f0ecff;display:grid;place-items:center;font-size:21px}.subject-lesson h3{margin:0 0 5px;font-size:16px}.subject-lesson .lesson-meta{color:var(--muted);font-size:12px}.lesson-statuses{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.lesson-status{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f1edff;color:#5b3bd7;font-size:11px;font-weight:700}.lesson-status.off{background:#f4f5f8;color:#777}.lesson-status.done{background:#eaf8f1;color:#168052}.lesson-actions{display:flex;gap:6px;align-items:center}@media(max-width:600px){.subject-lesson{grid-template-columns:auto 1fr}.lesson-actions{grid-column:2;justify-content:flex-start}.subject-lesson .lesson-icon{width:42px;height:42px}}.lesson-overview{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:16px}.lesson-overview .overview-item{padding:12px 10px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);border-radius:15px;color:#fff}.lesson-overview strong{display:block;font-size:17px}.lesson-overview span{display:block;font-size:11px;opacity:.82;margin-top:3px}@media(max-width:900px){.lesson-overview{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:600px){.lesson-overview{grid-template-columns:repeat(2,minmax(0,1fr))}}.study-suggestions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.suggestion{padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 6px 18px rgba(39,23,93,.05);display:flex;flex-direction:column}.suggestion .suggestion-icon{width:42px;height:42px;border-radius:13px;background:#f0ecff;display:grid;place-items:center;font-size:20px;margin-bottom:11px}.suggestion h3{margin:0 0 6px;font-size:15px}.suggestion p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}.suggestion .btn{margin-top:14px;align-self:flex-start}@media(max-width:900px){.study-suggestions{grid-template-columns:1fr}}.lesson-badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.lesson-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:#f0ecff;color:#5b3bd7;font-size:11px;font-weight:700}.muted-badge{background:#f4f5f8;color:#777}.done-badge{background:#eaf8f1;color:#168052}.quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.quick-action{display:flex;align-items:center;gap:12px;text-align:left;padding:15px;border:1px solid var(--line);background:#fff;border-radius:18px;cursor:pointer;transition:.18s;box-shadow:0 6px 18px rgba(39,23,93,.05)}.quick-action:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(39,23,93,.09)}.quick-action .qa-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#f0ecff;font-size:20px;flex:0 0 auto}.quick-action b{display:block;font-size:14px}.quick-action span{display:block;margin-top:3px;color:var(--muted);font-size:12px}@media(max-width:900px){.quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.quick-actions{grid-template-columns:1fr}}@media(max-width:700px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}.form{display:grid;gap:12px}.form input,.form textarea,.form select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:11px;outline:none;background:#fff}.form textarea{min-height:130px;resize:vertical}.modal-back{position:fixed;inset:0;background:rgba(8,10,25,.58);display:grid;place-items:center;padding:18px;z-index:50}.modal{background:#fff;border-radius:20px;width:min(560px,100%);padding:24px;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.lesson-tabs{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 5px;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;touch-action:pan-x}.lesson-tabs::-webkit-scrollbar{display:none}.lesson-tabs .tab{flex:0 0 auto}.tab{white-space:nowrap;padding:10px 13px;border-radius:11px;background:#f0eff8;color:#555}.tab.active{background:var(--purple);color:#fff}.audio{display:grid;gap:12px}.audio audio{width:100%}.concepts{display:flex;flex-wrap:wrap;gap:8px}.pill{padding:7px 10px;background:#eeeaff;color:#4d35c5;border-radius:999px;font-size:13px}.map{min-height:330px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at center,#f4f0ff,transparent 55%)}.map .center{padding:18px 24px;background:var(--purple);color:#fff;border-radius:16px;font-weight:900;z-index:2}.map .node{position:absolute;padding:12px 15px;background:#fff;border:1px solid #ddd7ff;border-radius:13px;box-shadow:var(--shadow);font-size:13px}.n1{top:28px;left:15%}.n2{top:34px;right:15%}.n3{bottom:35px;left:17%}.n4{bottom:32px;right:15%}.flash{min-height:230px;display:grid;place-items:center;text-align:center}.flash h2{font-size:25px}.quiz-option{display:block;width:100%;text-align:left;padding:12px;margin:8px 0;border:1px solid var(--line);background:#fff;border-radius:11px}.quiz-option.selected{border-color:var(--purple);background:#f0edff}.quiz-option.correct{border-color:#18a66b!important;background:#eaf8f1!important;color:#126b48}.quiz-option.wrong{border-color:#d83a56!important;background:#fff0f2!important;color:#a51e39}.quiz-feedback{margin-top:14px;padding:13px 15px;border-radius:13px;font-weight:700}.quiz-feedback.correct{background:#eaf8f1;color:#126b48}.quiz-feedback.wrong{background:#fff0f2;color:#a51e39}
+.map-editor{display:grid;grid-template-columns:1fr 300px;gap:16px}
+.map-canvas{min-height:430px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(circle at center,#f4f0ff,transparent 58%);position:relative;overflow:hidden}
+.map-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:15px 20px;border-radius:16px;background:var(--purple);color:#fff;font-weight:900;text-align:center;max-width:220px;z-index:3;box-shadow:var(--shadow)}
+.map-node{position:absolute;padding:10px 13px;background:#fff;border:1px solid #ddd7ff;border-radius:13px;box-shadow:var(--shadow);font-size:13px;font-weight:700;max-width:150px;text-align:center}
+.map-node:nth-of-type(2){top:28px;left:12%}.map-node:nth-of-type(3){top:28px;right:12%}.map-node:nth-of-type(4){bottom:28px;left:12%}.map-node:nth-of-type(5){bottom:28px;right:12%}
+.map-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.map-side textarea{min-height:170px}
+@media(max-width:800px){.map-editor{grid-template-columns:1fr}.map-canvas{min-height:360px}.map-node:nth-of-type(2){left:4%}.map-node:nth-of-type(3){right:4%}.map-node:nth-of-type(4){left:4%}.map-node:nth-of-type(5){right:4%}}
+
+.tutor-box{display:grid;grid-template-columns:1fr 320px;gap:18px}
+.tutor-chat{min-height:420px;display:flex;flex-direction:column;gap:12px}
+.tutor-msg{padding:13px 15px;border-radius:15px;line-height:1.5;max-width:86%}
+.tutor-user{margin-left:auto;background:#6847ff;color:#fff}
+.tutor-ai{background:#f3f0ff;border:1px solid #ddd7ff}
+.tutor-form{display:flex;gap:8px;margin-top:auto}
+.tutor-form input{flex:1;padding:13px 15px;border:1px solid var(--line);border-radius:12px;outline:none}
+@media(max-width:800px){.tutor-box{grid-template-columns:1fr}.tutor-chat{min-height:320px}}
+.maps-toolbar{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px;margin-bottom:18px}.maps-toolbar input,.maps-toolbar select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;outline:none}.map-card.hidden{display:none}@media(max-width:800px){.maps-toolbar{grid-template-columns:1fr}}.maps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.map-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.map-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.map-card-head h3{margin:0 0 5px}
+.badge{padding:6px 9px;border-radius:999px;background:#f0edff;color:var(--purple);font-size:12px;font-weight:800}
+.map-mini{height:180px;margin:16px 0;position:relative;border-radius:15px;background:radial-gradient(circle at center,#f4f0ff,transparent 60%);overflow:hidden}
+.map-mini:before,.map-mini:after{content:"";position:absolute;left:50%;top:50%;width:40%;height:1px;background:#b9a9ff;transform-origin:left center}
+.map-mini:before{transform:rotate(32deg)}.map-mini:after{transform:rotate(-32deg)}
+.map-mini-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;background:var(--purple);color:#fff;padding:9px 12px;border-radius:12px;font-size:11px;font-weight:800;max-width:125px;text-align:center}
+.map-mini span{position:absolute;background:#fff;border:1px solid #ddd7ff;border-radius:10px;padding:7px 9px;font-size:11px;font-weight:700;max-width:105px;z-index:2}
+.map-mini span:nth-of-type(1){left:6%;top:18%}.map-mini span:nth-of-type(2){right:6%;top:18%}.map-mini span:nth-of-type(3){left:6%;bottom:18%}.map-mini span:nth-of-type(4){right:6%;bottom:18%}
+.map-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+@media(max-width:800px){.maps-grid{grid-template-columns:1fr}}
+.chat{min-height:360px;display:flex;flex-direction:column;gap:12px}.bubble{padding:12px 14px;border-radius:15px;max-width:85%;background:#f0edff}.bubble.me{align-self:flex-end;background:#6d4aff;color:#fff}.chat-input{display:flex;gap:8px;margin-top:auto}.chat-input input{flex:1;padding:12px;border:1px solid var(--line);border-radius:12px}.toast{position:fixed;right:20px;bottom:20px;background:#12162b;color:#fff;padding:13px 16px;border-radius:12px;z-index:100;box-shadow:var(--shadow)}.empty{text-align:center;padding:35px;color:var(--muted)}.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#0d1328,#35227f 55%,#6d4aff)}.login{width:min(440px,100%);background:#fff;border-radius:25px;padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.3)}.login .brand{color:var(--ink);padding:0 0 15px}.result-list{position:absolute;top:52px;left:0;right:0;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);z-index:30;max-height:350px;overflow:auto}.result{padding:11px 14px;border-bottom:1px solid var(--line)}.result:hover{background:#f6f4ff}.mobile-nav{display:none}
+@media(max-width:1100px){.courses{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{display:none}.main{margin-left:0;padding:15px 14px 88px}.topbar{margin-bottom:16px}.topbar .search{max-width:none}.user{display:none}.hero{padding:22px;border-radius:20px}.hero h1{font-size:25px}.courses{grid-template-columns:repeat(2,1fr);gap:10px}.course-card{min-height:125px;padding:15px;border-radius:16px}.course-card h3{font-size:16px;margin-top:23px}.stats{grid-template-columns:repeat(2,1fr)}.three{grid-template-columns:1fr}.mobile-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:8px;right:8px;bottom:8px;background:#10152b;color:#fff;border-radius:18px;padding:7px;z-index:40;box-shadow:0 10px 35px rgba(0,0,0,.25)}.mobile-nav button{background:transparent;color:#cdd2e8;font-size:11px;padding:7px 3px}.mobile-nav button.active{background:#6d4aff;color:#fff;border-radius:12px}.section-head{gap:10px}.lesson-row{align-items:flex-start}.lesson-row .btn{font-size:12px;padding:8px}.panel{padding:15px}.map{min-height:280px}.n1,.n3{left:4%}.n2,.n4{right:4%}.search input{padding:12px}.lesson-tabs{margin:0 -5px}.lesson-tabs .tab{font-size:12px}}
+</style>
+<style id="studyai-ui-redesign">
+:root{
+  --bg:#f4f5fb;
+  --panel:#ffffff;
+  --ink:#11152d;
+  --muted:#707791;
+  --line:#e7e8f1;
+  --purple:#6738f5;
+  --purple-2:#7b4cff;
+  --blue:#246bff;
+  --navy:#0b1024;
+  --navy-2:#121a35;
+  --grad:linear-gradient(135deg,#5424e8 0%,#7147ff 55%,#8b5cff 100%);
+  --shadow:0 12px 35px rgba(43,28,105,.08);
+  --shadow-hover:0 18px 45px rgba(43,28,105,.13);
+  --radius:20px;
+}
+
+body{
+  background:
+    radial-gradient(circle at 85% 0%,rgba(113,71,255,.07),transparent 28%),
+    var(--bg);
+  color:var(--ink);
+}
+
+.sidebar{
+  width:238px;
+  padding:20px 14px;
+  background:linear-gradient(180deg,#0a1024 0%,#101733 100%);
+  box-shadow:8px 0 30px rgba(8,12,35,.12);
+}
+
+.brand{
+  font-size:25px;
+  padding:8px 12px 30px;
+  letter-spacing:-.5px;
+}
+
+.nav{
+  gap:5px;
+}
+
+.nav button{
+  min-height:45px;
+  padding:11px 13px;
+  border-radius:13px;
+  transition:background .18s,transform .18s;
+}
+
+.nav button:hover{
+  background:rgba(255,255,255,.08);
+  transform:translateX(2px);
+}
+
+.nav button.active{
+  background:linear-gradient(135deg,#6335ef,#7447ff);
+  box-shadow:0 8px 22px rgba(103,56,245,.28);
+}
+
+.main{
+  margin-left:238px;
+  padding:24px 30px 90px;
+}
+
+.topbar{
+  min-height:52px;
+  margin-bottom:26px;
+}
+
+.search input{
+  background:rgba(255,255,255,.9);
+  border-color:#e4e5ef;
+  border-radius:16px;
+  box-shadow:0 5px 18px rgba(35,28,80,.04);
+}
+
+.search input:focus{
+  border-color:#b8a8ff;
+  box-shadow:0 0 0 4px rgba(103,56,245,.08);
+}
+
+.avatar{
+  background:linear-gradient(135deg,#6030ed,#8059ff);
+  box-shadow:0 7px 18px rgba(103,56,245,.25);
+}
+
+.hero{
+  border-radius:24px;
+  padding:28px 30px;
+  background:var(--grad);
+  box-shadow:0 18px 45px rgba(80,42,210,.18);
+}
+
+.panel,
+.note-card,
+.subject-lesson,
+.quick-action,
+.suggestion{
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  transition:box-shadow .18s,transform .18s,border-color .18s;
+}
+
+.panel:hover,
+.note-card:hover,
+.quick-action:hover,
+.suggestion:hover{
+  box-shadow:var(--shadow-hover);
+}
+
+.course-card{
+  border-radius:20px;
+  box-shadow:0 12px 30px rgba(40,25,100,.12);
+  transition:transform .18s,box-shadow .18s;
+}
+
+.course-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 40px rgba(40,25,100,.18);
+}
+
+.btn{
+  border-radius:13px;
+  background:linear-gradient(135deg,#6234ee,#7447ff);
+  box-shadow:0 7px 18px rgba(103,56,245,.16);
+  transition:transform .16s,box-shadow .16s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 24px rgba(103,56,245,.23);
+}
+
+.btn.ghost{
+  background:#f0edff;
+  color:#5636d6;
+  box-shadow:none;
+}
+
+.btn.light{
+  box-shadow:none;
+}
+
+.section{
+  margin:28px 0;
+}
+
+.section-head{
+  gap:14px;
+}
+
+.section h2{
+  letter-spacing:-.3px;
+}
+
+.lesson-tabs{
+  padding:4px;
+  border-radius:16px;
+  background:#eeedf7;
+}
+
+.lesson-tabs .tab{
+  border-radius:11px;
+}
+
+.tab.active{
+  background:linear-gradient(135deg,#6234ee,#7447ff);
+  box-shadow:0 5px 14px rgba(103,56,245,.18);
+}
+
+.progress{
+  background:#e9eaf2;
+}
+
+.progress i{
+  background:linear-gradient(90deg,#6738f5,#31c6a2);
+}
+
+.mobile-nav{
+  background:rgba(11,16,36,.96);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 12px 35px rgba(5,8,25,.28);
+}
+
+.mobile-nav button.active{
+  background:linear-gradient(135deg,#6234ee,#7447ff);
+  box-shadow:0 5px 15px rgba(103,56,245,.25);
+}
+
+@media(max-width:1100px){
+  .main{
+    padding-left:22px;
+    padding-right:22px;
+  }
+}
+
+@media(max-width:760px){
+  .main{
+    padding:14px 12px 92px;
+  }
+
+  .topbar{
+    gap:8px;
+    margin-bottom:16px;
+  }
+
+  .hero{
+    padding:22px 20px;
+    border-radius:20px;
+  }
+
+  .panel,
+  .note-card,
+  .subject-lesson,
+  .quick-action,
+  .suggestion{
+    border-radius:17px;
+  }
+
+  .section{
+    margin:22px 0;
+  }
+
+  .mobile-nav{
+    left:8px;
+    right:8px;
+    bottom:8px;
+    border-radius:18px;
+  }
+}
+
+@media(max-width:430px){
+  .main{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .hero h1{
+    font-size:23px;
+  }
+
+  .hero p{
+    font-size:13px;
+  }
+
+  .section h2{
+    font-size:19px;
+  }
+
+  .btn{
+    padding:10px 13px;
+  }
+
+  .course-card{
+    min-height:118px;
+  }
+}
+</style>
+<style id="studyai-responsive-fix">
+@media(max-width:760px){
+  .mobile-nav{
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    min-height:58px;
+    overflow:hidden;
+  }
+
+  .mobile-nav button{
+    min-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .mobile-nav button:nth-child(6){
+    display:none;
+  }
+
+  .courses{
+    grid-template-columns:1fr;
+  }
+
+  .courses .course-card{
+    width:100%;
+    min-height:150px;
+  }
+}
+
+@media(min-width:761px) and (max-width:1100px){
+  .courses{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(min-width:1101px){
+  .courses{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+</style>
+<style id="studyai-mobile-header">
+@media(max-width:760px){
+  .topbar{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+
+  .topbar::before{
+    content:"StudyAI ✦";
+    display:block;
+    order:1;
+    flex:1;
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:-.5px;
+    color:#11152d;
+  }
+
+  .topbar .user{
+    order:2;
+    display:flex;
+    margin-left:0;
+  }
+
+  .topbar .user b{
+    display:none;
+  }
+
+  .topbar .avatar{
+    width:38px;
+    height:38px;
+    font-size:14px;
+  }
+
+  .topbar .search{
+    order:3;
+    flex:0 0 100%;
+    max-width:none;
+  }
+
+  .topbar .search input{
+    width:100%;
+  }
+}
+</style>
+<style id="studyai-dashboard-mobile-tune">
+@media(max-width:760px){
+  .topbar{
+    margin-bottom:12px;
+  }
+
+  .topbar::before{
+    font-size:20px;
+  }
+
+  .hero{
+    margin-bottom:14px;
+    padding:19px 18px;
+  }
+
+  .hero h1{
+    margin-bottom:5px;
+  }
+
+  .section{
+    margin:18px 0;
+  }
+
+  .section-head{
+    margin-bottom:10px;
+  }
+
+  .course-card{
+    min-height:138px !important;
+    padding:14px !important;
+  }
+
+  .course-card h3{
+    margin-top:16px;
+  }
+
+  .courses{
+    gap:9px;
+  }
+}
+</style>
+<style id="studyai-lesson-redesign">
+.lesson-page-hero{
+  margin-top:16px;
+  padding:26px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#6d4aff 0%,#5033c8 100%);
+  color:#fff;
+  box-shadow:0 14px 35px rgba(76,52,190,.18);
+}
+.lesson-page-hero .eyebrow{
+  font-size:12px;
+  font-weight:700;
+  opacity:.78;
+  margin-bottom:7px;
+}
+.lesson-page-hero h1{
+  margin:0;
+  font-size:30px;
+  line-height:1.15;
+}
+.lesson-page-hero .lesson-date{
+  margin-top:7px;
+  color:rgba(255,255,255,.76);
+  font-size:13px;
+}
+.lesson-page-hero .lesson-top-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+
+.lesson-tabs{
+  margin-top:18px;
+  padding:6px;
+  gap:5px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  box-shadow:0 6px 20px rgba(39,23,93,.05);
+}
+.lesson-tabs .tab{
+  border-radius:12px;
+  padding:10px 14px;
+  background:transparent;
+  color:#626276;
+  font-weight:700;
+  transition:.18s;
+}
+.lesson-tabs .tab:hover{
+  background:#f5f2ff;
+  color:var(--purple);
+}
+.lesson-tabs .tab.active{
+  background:var(--purple);
+  color:#fff;
+  box-shadow:0 5px 13px rgba(109,74,255,.22);
+}
+
+.lesson-content{
+  margin-top:18px;
+}
+
+.lesson-content .panel{
+  border-radius:20px;
+  box-shadow:0 7px 24px rgba(39,23,93,.045);
+}
+
+.lesson-overview{
+  margin-top:20px;
+}
+
+.lesson-audio-card{
+  padding:22px;
+}
+.lesson-audio-card audio{
+  width:100%;
+  margin:12px 0;
+}
+.lesson-audio-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:4px;
+}
+.lesson-audio-icon{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:#f0ecff;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+}
+.lesson-audio-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+@media(max-width:760px){
+  .lesson-page-hero{
+    padding:20px;
+    border-radius:20px;
+  }
+  .lesson-page-hero h1{
+    font-size:25px;
+  }
+  .lesson-tabs{
+    margin-left:-2px;
+    margin-right:-2px;
+  }
+  .lesson-tabs .tab{
+    padding:9px 11px;
+    font-size:12px;
+  }
+  .lesson-overview{
+    margin-top:15px;
+  }
+}
+</style>
+<style id="studyai-transcript-redesign">
+#lessonContent textarea#editor{
+  width:100%;
+  min-height:320px;
+  resize:vertical;
+  box-sizing:border-box;
+  line-height:1.6;
+  font-size:14px;
+  padding:16px;
+}
+
+#lessonContent .panel{
+  overflow:hidden;
+}
+
+@media(max-width:760px){
+  #lessonContent textarea#editor{
+    min-height:260px;
+  }
+}
+</style>
+<style id="studyai-concepts-redesign">
+#lessonContent textarea#concepts{
+  width:100%;
+  min-height:180px;
+  resize:vertical;
+  box-sizing:border-box;
+  line-height:1.6;
+  font-size:14px;
+  padding:16px;
+}
+
+#lessonContent .concepts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+#lessonContent .concepts .pill{
+  padding:8px 12px;
+  border-radius:999px;
+  background:#f0ecff;
+  color:var(--purple);
+  font-weight:700;
+  border:1px solid #ddd5ff;
+}
+
+@media(max-width:760px){
+  #lessonContent textarea#concepts{
+    min-height:150px;
+  }
+}
+</style>
+<style id="studyai-summary-redesign">
+#lessonContent textarea#editor{
+  width:100%;
+  box-sizing:border-box;
+  resize:vertical;
+  line-height:1.65;
+  font-size:14px;
+  padding:16px;
+}
+
+#lessonContent .section-head{
+  align-items:center;
+}
+
+@media(min-width:761px){
+  #lessonContent textarea#editor{
+    min-height:240px;
+  }
+}
+
+@media(max-width:760px){
+  #lessonContent textarea#editor{
+    min-height:200px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const API="/api"; let token=localStorage.getItem("studyai_final_token"); let state={view:"dashboard",data:null,lesson:null,tab:"audio",flashIndex:0,quizIndex:0,quizScore:0,quizAnswers:{},quizCompleted:false,tutorHistory:[]};
+const $=s=>document.querySelector(s);
+async function api(path,opts={}){const h=opts.headers||{}; if(!(opts.body instanceof FormData))h["Content-Type"]="application/json"; if(token)h.Authorization="Bearer "+token; const r=await fetch(API+path,{...opts,headers:h}); let d={}; try{d=await r.json()}catch{} if(!r.ok)throw new Error(d.error||"Errore"); return d}
+function esc(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function toast(t){const x=document.createElement("div");x.className="toast";x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2600)}
+function modal(title,body){const x=document.createElement("div");x.className="modal-back";x.innerHTML=`<div class="modal"><div class="modal-head"><h2>${title}</h2><button class="btn ghost small" data-close>×</button></div>${body}</div>`;document.body.appendChild(x);x.onclick=e=>{if(e.target===x||e.target.closest("[data-close]"))x.remove()};return x}
+function nav(){return `<aside class="sidebar"><div class="brand">Study<span>AI</span> ✦</div><div class="nav">${navBtn("dashboard","⌂","Home")}${navBtn("courses","📚","Corsi")}${navBtn("lessons","📖","Lezioni")}${navBtn("notes","📝","Appunti")}${navBtn("quiz","❓","Quiz")}${navBtn("maps","🗺️","Mappe")}${navBtn("stats","📊","Statistiche")}${state.me?.role==="ADMIN"||state.me?.role==="SUPER_ADMIN"?navBtn("admin","🛠️","Admin"):""}</div><div class="nav nav-bottom">${navBtn("settings","⚙️","Impostazioni")}<button id="logout">🚪 Esci</button></div></aside><nav class="mobile-nav">${navBtn("dashboard","⌂","Home")}${navBtn("courses","📚","Corsi")}${navBtn("lessons","📖","Lezioni")}${navBtn("quiz","❓","Quiz")}${navBtn("stats","📊","Altro")}${state.me?.role==="ADMIN"||state.me?.role==="SUPER_ADMIN"?navBtn("admin","🛠️","Admin"):""}</nav>`}
+function navBtn(v,i,t){return `<button class="${state.view===v?"active":""}" data-nav="${v}">${i} <span>${t}</span></button>`}
+function layout(content){return `<div class="app">${nav()}<main class="main"><div class="topbar"><div class="search"><input id="search" placeholder="Cerca lezioni, appunti, corsi..." autocomplete="off"><div id="results" class="result-list hidden"></div></div><div class="user"><div class="avatar">${esc((state.me?.name||"S").slice(0,1).toUpperCase())}</div><b>${esc(state.me?.name||"Studente")}</b></div></div>${content}</main></div>`}
+function bindCommon(){document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>{state.view=b.dataset.nav;render()});$("#logout")?.addEventListener("click",()=>{localStorage.removeItem("studyai_final_token");location.reload()});$("#search")?.addEventListener("input",async e=>{const q=e.target.value.trim();const box=$("#results");if(q.length<2){box.classList.add("hidden");return}try{const r=await api("/search?q="+encodeURIComponent(q));box.innerHTML=r.length?r.map(x=>`<div class="result" data-result="${x.type}" data-id="${x.id}"><b>${esc(x.title)}</b><div class="muted">${esc(x.subtitle||x.type)}</div></div>`).join(""):`<div class="empty">Nessun risultato</div>`;box.classList.remove("hidden");box.querySelectorAll(".result").forEach(x=>x.onclick=()=>openResult(x.dataset.result,x.dataset.id))}catch{} });}
+function openLesson(id,tab){
+  const nextId=Number(id);
+
+  if(Number(state.lessonId)!==nextId){
+    state.tutorHistory=[];
+  }
+
+  state.lessonId=nextId;
+  state.view="lesson";
+
+  if(tab) state.tab=tab;
+
+  render();
+}
+async function openResult(type,id){$("#results")?.classList.add("hidden");if(type==="course"){state.view="course";state.courseId=id;render()}else if(type==="lesson"){openLesson(id)}else{state.view="courses";render()}}
+async function render(){if(!token){renderLogin();return} try{state.me=await api("/me")}catch{localStorage.removeItem("studyai_final_token");token=null;return render()} if(state.view==="admin")return loadAdmin();if(state.view==="lesson"&&state.lessonId)return loadLesson(); if(state.view==="course"&&state.courseId)return loadCourse(); if(state.view==="courses")return loadCourses(); if(state.view==="stats")return loadStats(); if(["lessons","notes","quiz","maps"].includes(state.view))return loadCategory(); return loadDashboard()}
+function renderLogin(){document.body.innerHTML=`<div class="login-wrap"><div class="login"><div class="brand">Study<span>AI</span> ✦</div><p class="muted">Il tuo studio, semplice e intelligente.</p><form id="loginForm" class="form"><input id="email" type="email" placeholder="Email" required><input id="password" type="password" placeholder="Password (min. 6 caratteri)" required><div style="display:flex;gap:8px"><button class="btn" type="submit">Accedi</button><button class="btn ghost" type="button" id="register">Crea account</button></div><div id="loginErr" class="muted"></div></form></div></div>`;$("#loginForm").onsubmit=async e=>{e.preventDefault();try{const d=await api("/auth/login",{method:"POST",body:JSON.stringify({email:$("#email").value,password:$("#password").value})});token=d.token;localStorage.setItem("studyai_final_token",token);state.view="dashboard";render()}catch(err){$("#loginErr").textContent=err.message}};$("#register").onclick=async()=>{try{const d=await api("/auth/register",{method:"POST",body:JSON.stringify({email:$("#email").value,password:$("#password").value})});token=d.token;localStorage.setItem("studyai_final_token",token);render()}catch(err){$("#loginErr").textContent=err.message}}}
+async function quickNewLesson(){
+  const courses=await api("/courses");
+  if(!courses.length){toast("Crea prima un corso.");return}
+  const d=await api("/courses/"+courses[0].id);
+  if(!d.subjects?.length){state.view="course";state.courseId=courses[0].id;render();toast("Crea prima una materia.");return}
+  lessonModal(d.subjects[0].id);
+}
+function quickOpenLesson(tab){
+  const lesson=state.data?.lessons?.[0];
+  if(!lesson){toast("Crea prima una lezione.");return}
+  openLesson(lesson.id,tab);
+}
+function buildSuggestions(d, extras){
+  const suggestions=[];
+  const next=d.lessons?.find(l=>!l.completed);
+  if(next){
+    suggestions.push({icon:"📚",title:"Continua una lezione",text:`La lezione “${esc(next.title)}” non è ancora completata.`,action:"Continua →",id:next.id,tab:"audio"});
+  }
+  if((extras?.questions||0)>0){
+    suggestions.push({icon:"❓",title:"Allenati con un quiz",text:`Hai ${extras.questions} domanda${extras.questions===1?"":"e"} quiz disponibili.`,action:"Apri quiz →",id:d.lessons?.[0]?.id,tab:"quiz"});
+  }
+  if((extras?.flashcards||0)>0){
+    suggestions.push({icon:"📚",title:"Ripassa le flashcard",text:`Hai ${extras.flashcards} flashcard disponibili per il ripasso.`,action:"Ripassa →",id:d.lessons?.[0]?.id,tab:"flashcards"});
+  }
+  if(!suggestions.length){
+    suggestions.push({icon:"📚",title:"Crea la tua prima attività",text:"Aggiungi una lezione per iniziare a costruire il tuo percorso di studio.",action:"Nuova lezione →",create:true});
+  }
+  return suggestions.slice(0,3);
+}
+async function loadDashboard(){
+  const d=await api("/dashboard");
+  const courses=await api("/courses");
+  let flashcards=0, questions=0;
+  if(d.lessons?.length){
+    const details=await Promise.all(d.lessons.map(l=>api("/lessons/"+l.id).catch(()=>null)));
+    details.filter(Boolean).forEach(x=>{
+      flashcards+=Array.isArray(x.flashcards)?x.flashcards.length:0;
+      questions+=Array.isArray(x.questions)?x.questions.length:0;
+    });
+  }
+  state.data={...d,courses,studyExtras:{flashcards,questions}};
+  const c=courses;
+  document.getElementById("root").innerHTML=layout(`<section class="hero"><h1>Ciao, ${esc(state.me.name)} 👋</h1><p>Organizza il tuo studio, un passo alla volta.</p></section><div class="section-head"><h2>I miei corsi</h2><button class="btn" id="addCourse">+ Aggiungi corso</button></div><div class="grid courses">${c.length?c.map(courseCard).join(""):`<div class="panel empty" style="grid-column:1/-1">Crea il tuo primo corso per iniziare.</div>`}</div><div class="section"><div class="section-head"><h2>Azioni rapide</h2><span class="muted">Vai direttamente agli strumenti di studio</span></div><div class="quick-actions"><button class="quick-action" id="qaCourse"><div class="qa-icon">📚</div><div><b>Nuovo corso</b><span>Organizza un nuovo percorso</span></div></button><button class="quick-action" id="qaLesson"><div class="qa-icon">📖</div><div><b>Nuova lezione</b><span>Aggiungi una lezione</span></div></button><button class="quick-action" id="qaAudio"><div class="qa-icon">🎙️</div><div><b>Audio / registra</b><span>Carica o registra una lezione</span></div></button><button class="quick-action" id="qaFlash"><div class="qa-icon">🃏</div><div><b>Flashcard</b><span>Studia o crea flashcard</span></div></button><button class="quick-action" id="qaQuiz"><div class="qa-icon">❓</div><div><b>Quiz</b><span>Crea e svolgi domande</span></div></button><button class="quick-action" id="qaMap"><div class="qa-icon">🗺️</div><div><b>Mappa concettuale</b><span>Visualizza i concetti</span></div></button></div></div><div class="section"><div class="section-head"><h2>✨ Cosa puoi fare adesso</h2><span class="muted">Suggerimenti basati sulle attività disponibili</span></div><div class="study-suggestions">${buildSuggestions(d,{flashcards,questions}).map(x=>`<div class="suggestion"><div class="suggestion-icon">${x.icon}</div><h3>${x.title}</h3><p>${x.text}</p><button class="btn small" data-suggestion-id="${x.id||""}" data-suggestion-tab="${x.tab||""}" data-suggestion-create="${x.create?"1":""}">${x.action}</button></div>`).join("")}</div></div><div class="grid two section"><div class="panel"><div class="section-head"><h2>Lezioni recenti</h2></div>${d.lessons.length?d.lessons.map(lessonRow).join(""):`<div class="empty">Nessuna lezione ancora.</div>`}</div><div class="panel"><div class="section-head"><h2>Stato dello studio</h2></div><div class="stats"><div class="stat"><strong>${d.stats.percent}%</strong><span>Progresso</span></div><div class="stat"><strong>${d.stats.done}</strong><span>Lezioni completate</span></div><div class="stat"><strong>${d.stats.total}</strong><span>Lezioni totali</span></div><div class="stat"><strong>${flashcards}</strong><span>Flashcard</span></div><div class="stat"><strong>${questions}</strong><span>Domande quiz</span></div><div class="stat"><strong>AI</strong><span>Pronta per l'integrazione</span></div></div><div style="margin-top:16px" class="progress"><i style="width:${d.stats.percent}%"></i></div><div class="study-note">ℹ️ Il tempo di studio verrà tracciato in una fase successiva, quando introdurremo il sistema di attività e statistiche avanzate.</div></div></div>`);bindCommon();document.querySelectorAll("[data-suggestion-id]").forEach(b=>b.onclick=()=>{if(b.dataset.suggestionCreate){quickNewLesson();return}openLesson(b.dataset.suggestionId,b.dataset.suggestionTab||"audio")});$("#addCourse").onclick=()=>courseModal();$("#qaCourse").onclick=()=>courseModal();$("#qaLesson").onclick=quickNewLesson;$("#qaAudio").onclick=()=>quickOpenLesson("audio");$("#qaFlash").onclick=()=>quickOpenLesson("flashcards");$("#qaQuiz").onclick=()=>quickOpenLesson("quiz");$("#qaMap").onclick=()=>quickOpenLesson("map");bindRows()}
+function courseCard(c){
+  const progress=Number.isFinite(Number(c.progress))?Math.max(0,Math.min(100,Number(c.progress))):0;
+  const subjects=(c.subject_count!==undefined&&c.subject_count!==null)?c.subject_count:"—";
+  const last=c.last_activity?`Ultima attività: ${esc(c.last_activity)}`:"Pronto per iniziare";
+  return `<div class="course-card">
+    <div class="actions">
+      <button class="btn light small" data-edit-course="${c.id}" aria-label="Modifica corso">✏️</button>
+      <button class="btn danger small" data-del-course="${c.id}" aria-label="Elimina corso">×</button>
+    </div>
+    <div class="course-kicker">${esc(c.university||"Università")}</div>
+    <h3>${esc(c.name)}</h3>
+    <p class="course-meta">${last}</p>
+    <div class="course-info">
+      <span class="course-chip">📚 ${subjects} materie</span>
+      <span class="course-chip">📖 ${Number(c.lesson_count||0)} lezioni</span>
+    </div>
+    <div class="course-progress">
+      <div class="course-progress-head"><span>Progresso</span><strong>${progress}%</strong></div>
+      <div class="progress"><i style="width:${progress}%"></i></div>
+    </div>
+    <div class="course-footer">
+      <span style="font-size:12px;opacity:.78">Continua il tuo studio</span>
+      <button class="btn light small" data-open-course="${c.id}">Apri corso →</button>
+    </div>
+  </div>`
+}
+function lessonRow(l){
+  const audio=l.audio_name?`<span class="lesson-badge">🎙️ Audio</span>`:`<span class="lesson-badge muted-badge">Nessun audio</span>`;
+  const done=l.completed?`<span class="lesson-badge done-badge">✓ Completata</span>`:`<span class="lesson-badge">Da studiare</span>`;
+  const date=l.date?` · ${esc(l.date)}`:"";
+  return `<div class="lesson-row recent-lesson"><div class="icon">${l.audio_name?"???":"?"}</div><div class="grow"><b>${esc(l.title)}</b><div class="muted">${esc(l.course_name||"")} · ${esc(l.subject_name||"")}${date}</div><div class="lesson-badges">${audio}${done}</div></div><button class="btn small" data-open-lesson="${l.id}">Apri</button></div>`
+}
+function bindRows(){document.querySelectorAll("[data-open-course]").forEach(b=>b.onclick=()=>{state.courseId=b.dataset.openCourse;state.view="course";render()});document.querySelectorAll("[data-open-lesson]").forEach(b=>b.onclick=()=>{openLesson(b.dataset.openLesson)});document.querySelectorAll("[data-edit-course]").forEach(b=>b.onclick=async()=>{const c=(await api("/courses")).find(x=>x.id==b.dataset.editCourse);courseModal(c)});document.querySelectorAll("[data-del-course]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminare corso e tutte le sue materie e lezioni?")){await api("/courses/"+b.dataset.delCourse,{method:"DELETE"});render()}})}
+function courseModal(c){const m=modal(c?"Modifica corso":"Nuovo corso",`<form class="form" id="f"><input id="n" placeholder="Nome corso" value="${esc(c?.name||"")}" required><input id="u" placeholder="Università" value="${esc(c?.university||"")}"><input id="col" type="color" value="${c?.color||"#6d4aff"}"><button class="btn">${c?"Salva":"Crea corso"}</button></form>`);m.querySelector("#f").onsubmit=async e=>{e.preventDefault();const body={name:m.querySelector("#n").value,university:m.querySelector("#u").value,color:m.querySelector("#col").value};await api(c?"/courses/"+c.id:"/courses",{method:c?"PATCH":"POST",body:JSON.stringify(body)});m.remove();render()}}
+async function loadCourses(){const cs=await api("/courses");document.getElementById("root").innerHTML=layout(`<div class="section-head"><h2>I miei corsi</h2><button class="btn" id="addCourse">+ Aggiungi corso</button></div><div class="grid courses">${cs.length?cs.map(courseCard).join(""):`<div class="panel empty" style="grid-column:1/-1">Nessun corso.</div>`}</div>`);bindCommon();$("#addCourse").onclick=()=>courseModal();bindRows()}
+async function loadCourse(){const d=await api("/courses/"+state.courseId);state.course=d;document.getElementById("root").innerHTML=layout(`<button class="btn ghost small" id="back">← Dashboard</button><section class="hero" style="margin-top:16px"><h1>${esc(d.course.name)}</h1><p>${esc(d.course.university||"Università")}</p><div style="margin-top:15px"><button class="btn light small" id="editCourse">✏️ Modifica</button> <button class="btn danger small" id="delCourse">Elimina</button></div></section><div class="section-head"><h2>Materie</h2><button class="btn" id="addSubject">+ Materia</button></div><div class="grid two">${d.subjects.length?d.subjects.map(s=>`<div class="panel"><div class="section-head"><div><h3 style="margin:0">${esc(s.name)}</h3><span class="muted">${s.lesson_count} lezioni</span></div><div><button class="btn ghost small" data-edit-sub="${s.id}">✏️</button><button class="btn danger small" data-del-sub="${s.id}">×</button></div></div><button class="btn small" data-open-sub="${s.id}">Apri materia</button></div>`).join(""):`<div class="panel empty" style="grid-column:1/-1">Crea la prima materia.</div>`}</div>`);bindCommon();$("#back").onclick=()=>{state.view="dashboard";render()};$("#editCourse").onclick=()=>courseModal(d.course);$("#delCourse").onclick=async()=>{if(confirm("Eliminare definitivamente il corso?")){await api("/courses/"+d.course.id,{method:"DELETE"});state.view="dashboard";render()}};$("#addSubject").onclick=()=>subjectModal(d.course.id);document.querySelectorAll("[data-open-sub]").forEach(b=>b.onclick=()=>{state.subjectId=b.dataset.openSub;loadSubject()});document.querySelectorAll("[data-edit-sub]").forEach(b=>b.onclick=async()=>subjectModal(d.course.id,d.subjects.find(s=>s.id==b.dataset.editSub)));document.querySelectorAll("[data-del-sub]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminare materia e lezioni?")){await api("/subjects/"+b.dataset.delSub,{method:"DELETE"});loadCourse()}})}
+function subjectModal(courseId,s){const m=modal(s?"Modifica materia":"Nuova materia",`<form class="form" id="f"><input id="n" placeholder="Nome materia" value="${esc(s?.name||"")}" required><input id="col" type="color" value="${s?.color||"#6d4aff"}"><button class="btn">${s?"Salva":"Crea materia"}</button></form>`);m.querySelector("#f").onsubmit=async e=>{e.preventDefault();const body={name:m.querySelector("#n").value,color:m.querySelector("#col").value};await api(s?"/subjects/"+s.id:"/courses/"+courseId+"/subjects",{method:s?"PATCH":"POST",body:JSON.stringify(body)});m.remove();loadCourse()}}
+async function loadSubject(){
+  const d=await api("/subjects/"+state.subjectId);
+  const details=await Promise.all((d.lessons||[]).map(l=>api("/lessons/"+l.id).catch(()=>({lesson:l}))));
+  const enriched=(d.lessons||[]).map((l,i)=>{
+    const x=details[i]||{};
+    const full=x.lesson||l;
+    return {...l,...full,flashcards:Array.isArray(x.flashcards)?x.flashcards:[],questions:Array.isArray(x.questions)?x.questions:[]};
+  });
+  document.getElementById("root").innerHTML=layout(`<button class="btn ghost small" id="back">← Corso</button><section class="hero" style="margin-top:16px"><div class="muted" style="color:#ddd">Materia · ${esc(d.subject.course_name)}</div><h1>${esc(d.subject.name)}</h1><p>${enriched.length} ${enriched.length===1?"lezione":"lezioni"} disponibili</p></section><div class="section-head"><h2>Lezioni</h2><button class="btn" id="addLesson">+ Lezione</button></div><div class="subject-lessons">${enriched.length?enriched.map(l=>{
+    const content=[];
+    content.push(l.audio_name?`<span class="lesson-status">🎙️ Audio</span>`:`<span class="lesson-status off">Audio assente</span>`);
+    content.push(l.transcript?`<span class="lesson-status">📝 Trascrizione</span>`:`<span class="lesson-status off">Trascrizione</span>`);
+    content.push(l.summary?`<span class="lesson-status">📄 Riassunto</span>`:`<span class="lesson-status off">Riassunto</span>`);
+    if((l.flashcards||[]).length) content.push(`<span class="lesson-status">🃏 ${l.flashcards.length} flashcard</span>`);
+    if((l.questions||[]).length) content.push(`<span class="lesson-status">❓ ${l.questions.length} quiz</span>`);
+    if(l.completed) content.push(`<span class="lesson-status done">✓ Completata</span>`);
+    else content.push(`<span class="lesson-status off">Da studiare</span>`);
+    return `<article class="subject-lesson"><div class="lesson-icon">${l.audio_name?"🎙️":"📖"}</div><div><h3>${esc(l.title)}</h3><div class="lesson-meta">Lezione ${esc(l.lesson_number||"—")} · ${esc(l.date||"")}</div><div class="lesson-statuses">${content.join("")}</div></div><div class="lesson-actions"><button class="btn ghost small" data-edit-lesson="${l.id}">✏️</button><button class="btn danger small" data-del-lesson="${l.id}">×</button><button class="btn small" data-open-lesson="${l.id}">Apri</button></div></article>`
+  }).join(""):`<div class="panel empty">Nessuna lezione. Crea la prima per iniziare.</div>`}</div>`);bindCommon();$("#back").onclick=()=>{state.view="course";state.courseId=d.subject.course_id;render()};$("#addLesson").onclick=()=>lessonModal(d.subject.id);document.querySelectorAll("[data-open-lesson]").forEach(b=>b.onclick=()=>{openLesson(b.dataset.openLesson)});document.querySelectorAll("[data-edit-lesson]").forEach(b=>b.onclick=async()=>lessonModal(d.subject.id,await api("/lessons/"+b.dataset.editLesson).then(x=>x.lesson)));document.querySelectorAll("[data-del-lesson]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminare la lezione?")){await api("/lessons/"+b.dataset.delLesson,{method:"DELETE"});loadSubject()}})}
+
+function lessonModal(subjectId,l){const m=modal(l?"Modifica lezione":"Nuova lezione",`<form class="form" id="f"><input id="t" placeholder="Titolo lezione" value="${esc(l?.title||"")}" required><input id="n" placeholder="Numero lezione" value="${esc(l?.lesson_number||"")}"><input id="d" type="date" value="${esc(l?.date||"")}"><button class="btn">${l?"Salva":"Crea lezione"}</button></form>`);m.querySelector("#f").onsubmit=async e=>{e.preventDefault();const body={title:m.querySelector("#t").value,lesson_number:m.querySelector("#n").value,date:m.querySelector("#d").value};await api(l?"/lessons/"+l.id:"/subjects/"+subjectId+"/lessons",{method:l?"PATCH":"POST",body:JSON.stringify(body)});m.remove();loadSubject()}}
+async function loadLesson(){const d=await api("/lessons/"+state.lessonId);d.lesson={...d.lesson,flashcards:Array.isArray(d.flashcards)?d.flashcards:[],questions:Array.isArray(d.questions)?d.questions:[]};state.lesson=d;document.getElementById("root").innerHTML=layout(lessonHTML(d));bindCommon();document.addEventListener("click",async e=>{
+  if(e.target?.id!=="aiQuiz") return;
+
+  try{
+    const data=await api("/ai/quiz",{
+      method:"POST",
+      body:JSON.stringify({lessonId:state.lessonId})
+    });
+
+    toast("Quiz AI generato ("+data.usage.remaining+" rimasti)");
+    render();
+  }catch(err){
+    toast(err.message);
+  }
+});bindLesson()}
+function lessonHTML(d){
+  const l=d.lesson;
+
+  const audioBadge = l.audio_name
+    ? `<span class="lesson-badge">🎙️ Audio</span>`
+    : `<span class="lesson-badge muted-badge">Audio assente</span>`;
+
+  const transcriptBadge = l.transcript
+    ? `<span class="lesson-badge">📝 Trascrizione</span>`
+    : `<span class="lesson-badge muted-badge">Trascrizione assente</span>`;
+
+  const summaryBadge = l.summary
+    ? `<span class="lesson-badge">📄 Riassunto</span>`
+    : `<span class="lesson-badge muted-badge">Riassunto assente</span>`;
+
+  const conceptsCount = Array.isArray(l.concepts)
+    ? l.concepts.length
+    : String(l.concepts||"").split(",").map(x=>x.trim()).filter(Boolean).length;
+
+  const flashcardsCount = Array.isArray(l.flashcards)
+    ? l.flashcards.length
+    : 0;
+
+  const questionsCount = Array.isArray(l.questions)
+    ? l.questions.length
+    : 0;
+
+  return `
+    <button class="btn ghost small" id="backLesson">
+      ← Torna alla materia
+    </button>
+
+    <section class="lesson-page-hero">
+
+      <div class="eyebrow">
+        Lezione · ${esc(l.course_name||"")} · ${esc(l.subject_name||"")}
+      </div>
+
+      <h1>${esc(l.title||"Lezione")}</h1>
+
+      ${l.date ? `<div class="lesson-date">${esc(l.date)}</div>` : ""}
+
+      <div class="lesson-top-actions">
+        <button class="btn light small" id="complete">
+          ${l.completed ? "✓ Completata" : "Segna come completata"}
+        </button>
+
+        <button class="btn light small" id="analyzeLesson">
+          🧠 Analizza lezione con AI
+        </button>
+      </div>
+
+      <div class="lesson-badges">
+        ${audioBadge}
+        ${transcriptBadge}
+        ${summaryBadge}
+        <span class="lesson-badge">💡 Concetti ${conceptsCount}</span>
+        <span class="lesson-badge">🃏 Flashcard ${flashcardsCount}</span>
+        <span class="lesson-badge">❓ Quiz ${questionsCount}</span>
+      </div>
+
+    </section>
+
+    <div class="lesson-tabs">
+      ${[
+        ["audio","🎙️ Audio"],
+        ["transcript","📝 Trascrizione"],
+        ["summary","📄 Riassunto"],
+        ["concepts","💡 Concetti"],
+        ["map","🗺️ Mappa"],
+        ["flashcards","🃏 Flashcard"],
+        ["quiz","❓ Quiz"],
+        ["tutor","🤖 Tutor AI"]
+      ].map(([key,label]) =>
+        `<button class="tab ${state.tab===key?"active":""}" data-tab="${key}">${label}</button>`
+      ).join("")}
+    </div>
+
+    <div class="lesson-content" id="lessonContent">
+      ${lessonTab(d)}
+    </div>
+  `;
+}function renderTutorAnswer(value=""){
+  let text=esc(value);
+
+  text=text.replace(/`([^`]+)`/g,"<code>$1</code>");
+  text=text.replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");
+  text=text.replace(/(^|[\s(])\*([^*]+)\*(?=[\s).,!?:;]|$)/g,"$1<em>$2</em>");
+
+  const lines=text.split(/\r?\n/);
+  let html="";
+  let inList=false;
+  let ordered=false;
+
+  for(const line of lines){
+    const trimmed=line.trim();
+
+    if(!trimmed){
+      if(inList){
+        html+="</ol>";
+        inList=false;
+      }
+      html+="<br>";
+      continue;
+    }
+
+    const orderedMatch=trimmed.match(/^(\d+)[.)]\s+(.+)$/);
+    const bulletMatch=trimmed.match(/^[-*•]\s+(.+)$/);
+
+    if(orderedMatch){
+      if(!inList || !ordered){
+        if(inList) html+="</ul>";
+        html+="<ol>";
+        inList=true;
+        ordered=true;
+      }
+      html+="<li>"+orderedMatch[2]+"</li>";
+      continue;
+    }
+
+    if(bulletMatch){
+      if(!inList || ordered){
+        if(inList) html+="</ol>";
+        html+="<ul>";
+        inList=true;
+        ordered=false;
+      }
+      html+="<li>"+bulletMatch[1]+"</li>";
+      continue;
+    }
+
+    if(inList){
+      html+=ordered?"</ol>":"</ul>";
+      inList=false;
+    }
+
+    html+=line+"<br>";
+  }
+
+  if(inList) html+=ordered?"</ol>":"</ul>";
+
+  return html.replace(/(<br>)+$/,"");
+}
+function tutorLocalAnswer(l,q){
+  const lesson=l||{};
+  const notes=Array.isArray(lesson.notes)?lesson.notes.map(n=>n?.content||n?.text||"").filter(Boolean):[];
+  const flashcards=Array.isArray(lesson.flashcards)?lesson.flashcards:[];
+  const questions=Array.isArray(lesson.questions)?lesson.questions:[];
+  const title=String(lesson.title||"");
+  const summary=String(lesson.summary||"");
+  const transcript=String(lesson.transcript||"");
+  const concepts=String(lesson.concepts||"");
+  const notesText=notes.join("\n");
+  const sourceParts=[
+    title?`Titolo: ${title}`:"",
+    summary?`Riassunto: ${summary}`:"",
+    transcript?`Trascrizione: ${transcript}`:"",
+    concepts?`Concetti: ${concepts}`:"",
+    notesText?`Appunti: ${notesText}`:""
+  ].filter(Boolean);
+  if(!sourceParts.length) return "Non ho ancora materiale sufficiente in questa lezione. Inserisci una trascrizione, un riassunto, dei concetti o degli appunti e riprova.";
+  const clean=String(q||"").trim();
+  if(!clean) return "Scrivimi una domanda sulla lezione.";
+
+  const lower=clean.toLowerCase();
+  const stop=["qual","quale","quali","cosa","come","perché","perche","della","delle","degli","questa","questo","lezione","puoi","spiegare","dimmi","fammi","sono","nella","nelle"];
+  const terms=(lower.match(/[a-zàèéìòóù]{3,}/g)||[]).filter(t=>!stop.includes(t));
+  const allText=sourceParts.join("\n");
+  const sentences=allText.replace(/\s+/g," ").split(/(?<=[.!?])\s+/).map(s=>s.trim()).filter(Boolean);
+
+  const scoreSentence=(s)=>{
+    const sl=s.toLowerCase();
+    let score=0;
+    for(const t of terms) if(sl.includes(t)) score++;
+    if(lower.includes("definiz") && /è|sono|significa|indica|si definisce/i.test(s)) score+=2;
+    if(lower.includes("formula") && /formula|=|equazione/i.test(s)) score+=3;
+    return score;
+  };
+
+  const ranked=sentences.map(s=>({s,score:scoreSentence(s)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  const conceptList=concepts.split(",").map(x=>x.trim()).filter(Boolean);
+
+  if(/^(ciao|salve|hey|buongiorno|buonasera)\b/i.test(lower))
+    return `Ciao! Sono il tutor di ${title||"questa lezione"}. Posso spiegarti i concetti, chiarire definizioni, riassumere il materiale o aiutarti con domande di ripasso.`;
+
+  if(/(riassum|in breve|brevemente|sintesi)/i.test(lower)){
+    if(summary) return `In breve: ${summary}`;
+    if(ranked.length) return `In base al materiale: ${ranked.slice(0,4).map(x=>x.s).join(" ")}`;
+  }
+
+  if(/(concett|punti principal|idee principal|cosa devo ricordare)/i.test(lower)){
+    if(conceptList.length) return `I concetti principali disponibili sono: ${conceptList.join(", ")}. Se vuoi, chiedimi di spiegare uno di questi.`;
+    if(ranked.length) return `I punti più rilevanti che trovo nel materiale sono: ${ranked.slice(0,4).map(x=>x.s).join(" ")}`;
+  }
+
+  if(/(flashcard|domande.*quiz|quiz|ripasso)/i.test(lower) && (flashcards.length || questions.length)){
+    const parts=[];
+    if(flashcards.length) parts.push(`${flashcards.length} flashcard`);
+    if(questions.length) parts.push(`${questions.length} domande quiz`);
+    return `Per questa lezione hai ${parts.join(" e ")} disponibili. Posso anche spiegarti gli argomenti prima del ripasso.`;
+  }
+
+  if(/(definiz|significa|che cos|cos'è|cosa significa)/i.test(lower) && ranked.length)
+    return `Dal materiale della lezione: ${ranked.slice(0,3).map(x=>x.s).join(" ")}`;
+
+  if(/(formula|equazion|calcol|simbol)/i.test(lower) && ranked.length)
+    return `Nel materiale trovo questi riferimenti: ${ranked.slice(0,4).map(x=>x.s).join(" ")}`;
+
+  if(ranked.length){
+    const unique=[];
+    for(const item of ranked){ if(!unique.includes(item.s)) unique.push(item.s); if(unique.length>=4) break; }
+    return `In base al materiale della lezione: ${unique.join(" ")}`;
+  }
+
+  if(conceptList.length)
+    return `Non trovo una corrispondenza precisa nella trascrizione o nel riassunto. I concetti disponibili sono: ${conceptList.join(", ")}. Prova a chiedermi, ad esempio, "spiegami ${conceptList[0]}".`;
+
+  return "Non trovo una risposta precisa nel materiale disponibile. Prova a formulare la domanda con una parola o un concetto presente nella lezione.";
+}
+function lessonTab(d){const l=d.lesson;if(state.tab==="audio")return `<div class="grid two"><div class="panel"><h2>Registrazione</h2>${l.audio_path?`<p class="muted">${esc(l.audio_name||"Audio")}</p><audio class="audio" controls src="/${esc(l.audio_path).replace(/\\\\/g,"/")}"></audio><button class="btn danger small" id="removeAudio">Rimuovi registrazione</button>`:`<div class="empty">Nessuna registrazione caricata.</div>`}<div class="panel" style="margin-top:15px;background:#faf9ff;border-color:#ddd7ff"><h3 style="margin-top:0">🎙️ Registra direttamente</h3><p class="muted">Usa il microfono del dispositivo e salva la registrazione direttamente in questa lezione.</p><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn" id="startRecord">🎙️ Avvia registrazione</button><button class="btn ghost hidden" id="pauseRecord">⏸️ Pausa</button><button class="btn danger hidden" id="stopRecord">¦ Termina e salva</button><span id="recordTimer" class="pill hidden">00:00</span></div><div id="recordStatus" class="muted" style="margin-top:10px"></div></div><form id="audioForm" style="margin-top:15px"><input type="file" id="audioFile" accept=".mp3,.wav,.m4a,.ogg,.webm,audio/*"><button class="btn" style="margin-top:10px">Carica audio</button></form></div><div class="panel"><h2>Stato</h2><p><b>${l.audio_path?"Audio pronto":"Audio da caricare"}</b></p><p class="muted">Puoi caricare un file oppure registrare direttamente dal microfono. Puoi generare la trascrizione automaticamente usando l'AI.</p></div></div>`;if(state.tab==="transcript")return `<div class="panel"><div class="section-head"><div><h2>Trascrizione</h2><p class="muted">${l.audio_path?"Genera automaticamente la trascrizione dall'audio.":"Carica prima un audio nella scheda Audio."}</p></div>${l.audio_path?`<button class="btn small" id="aiTranscript">📝 Trascrivi con AI</button>`:""}</div>${editorInner("transcript",l.transcript,"Incolla o modifica qui la trascrizione della lezione.")}</div>`;if(state.tab==="summary")return `<div class="panel"><div class="section-head"><h2>Riassunto</h2><button class="btn small" id="demoAI">Genera riassunto AI</button></div>${editorInner("summary",l.summary,"Puoi modificare il riassunto generato dall'AI.")}</div>`;if(state.tab==="concepts")return `<div class="panel"><h2>Concetti principali</h2><p class="muted">Separali con virgole.</p><textarea id="concepts" class="form">${esc(l.concepts||"")}</textarea><button class="btn" id="saveConcepts" style="margin-top:10px">Salva concetti</button><div class="concepts" style="margin-top:15px">${(l.concepts||"").split(",").map(x=>x.trim()).filter(Boolean).map(x=>`<span class="pill">${esc(x)}</span>`).join("")}</div></div>`;if(state.tab==="tutor"){
+  const l=d.lesson;
+  return `<div class="tutor-box">
+    <div class="panel tutor-chat">
+      <div class="section-head"><div><h2>Tutor AI</h2><p class="muted">Tutor AI contestuale: usa il contenuto della lezione, gli appunti e i materiali di ripasso per aiutarti a capire e studiare.</p></div></div>
+      <div id="tutorMessages"><div class="tutor-msg tutor-ai">Ciao! Sono il tutor di <b>${esc(l.title)}</b>. Fammi una domanda sulla lezione.</div></div>
+      <form id="tutorForm" class="tutor-form"><input id="tutorInput" placeholder="Es. Qual è il concetto principale?" autocomplete="off"><button class="btn">Invia</button></form>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0">Materiale disponibile</h3>
+      <p>${l.transcript?"📝 Trascrizione":"— Trascrizione"}</p>
+      <p>${l.summary?"📄 Riassunto":"— Riassunto"}</p>
+      <p>${l.concepts?"💡 Concetti":"— Concetti"}</p>
+      <button class="btn ghost" id="tutorClear">Nuova conversazione</button>
+    </div>
+  </div>`;
+}if(state.tab==="map"){
+  const concepts=String(l.concepts||"").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
+  return `<div class="map-editor">
+    <div class="panel">
+      <div class="section-head"><div><h2>Mappa concettuale</h2><p class="muted">Una vista visuale dei concetti principali della lezione.</p></div><button class="btn small" id="regenMap">↻ Rigenera</button></div>
+      <div class="map-canvas">
+        <svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          ${concepts.map((c,i)=>{
+            const points=[[20,18],[80,18],[20,82],[80,82]];
+            const [x,y]=points[i];
+            return `<line x1="50" y1="50" x2="${x}" y2="${y}" stroke="#b9a9ff" stroke-width="1"/>`;
+          }).join("")}
+        </svg>
+        <div class="map-center">${esc(l.title)}</div>
+        ${concepts.map(c=>`<div class="map-node">${esc(c)}</div>`).join("")}
+      </div>
+    </div>
+    <div class="panel map-side">
+      <h3 style="margin-top:0">Concetti</h3>
+      <p class="muted">Modifica i concetti separandoli con virgole, poi rigenera la mappa.</p>
+      <textarea id="mapConcepts" class="form">${esc(l.concepts||"")}</textarea>
+      <button class="btn" id="autoMapConcepts" style="margin-top:10px">✨ Genera automaticamente</button><button class="btn ghost" id="saveMapConcepts" style="margin-top:10px">Salva e aggiorna</button>
+    </div>
+  </div>`;
+}if(state.tab==="flashcards")return flashTab(d);if(state.tab==="quiz")return quizTab(d);return tutorTab(d)}
+
+function generateLocalConcepts(l){
+  const text=[l.title||"",l.summary||"",l.transcript||""].join(" ").toLowerCase();
+  const stop=new Set(("a ad al alla allo ai agli alle con da dal dalla delle dei degli del della di e ed è in nel nella nei negli nelle il lo la i gli le un una uno per tra fra su che chi cui come come si sono era essere stato questa questo queste questi quella quello quelle quelli più meno molto anche non una uno degli delle delle loro loro suo sua suoi sue dove quando perché quindi se ma o od e poi già può possono deve devono hanno ha ho hai fare fatto parte tipo modo cosa cose corso lezione testo appunti concetto concetti").split(/\s+/));
+  const words=(text.match(/[a-zàèéìòóù]{3,}/gi)||[]).map(w=>w.toLowerCase()).filter(w=>!stop.has(w));
+  const freq={};
+  for(const w of words) freq[w]=(freq[w]||0)+1;
+  const ranked=Object.entries(freq).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  const out=[];
+  for(const [w] of ranked){
+    if(out.length>=4) break;
+    if(!out.some(x=>x.toLowerCase()===w)) out.push(w.charAt(0).toUpperCase()+w.slice(1));
+  }
+  return out.join(", ");
+}
+function editor(title,key,value,ph){return `<div class="panel"><h2>${title}</h2>${editorInner(key,value,ph)}<button class="btn" id="saveEditor" style="margin-top:10px">Salva</button></div>`}
+function editorInner(key,value,ph){return `<textarea id="editor" class="form" placeholder="${esc(ph)}">${esc(value||"")}</textarea>`}
+function flashTab(d){
+  const fs=d.flashcards;
+
+  if(!fs.length){
+    return `<div class="panel">
+      <div class="section-head">
+        <h2>Flashcard</h2>
+        <div>
+          <button class="btn" id="generateFlashcardsAI">✨ Genera flashcard AI</button>
+          <button class="btn ghost" id="addFlash">+ Crea flashcard</button>
+        </div>
+      </div>
+      <div class="empty">Nessuna flashcard.</div>
+    </div>`;
+  }
+
+  const f=fs[Math.min(state.flashIndex,fs.length-1)];
+
+  return `<div class="grid two">
+    <div class="panel flash">
+      <div>
+        <span class="pill">Flashcard ${state.flashIndex+1}/${fs.length}</span>
+        <h2>${esc(f.question)}</h2>
+        <p id="answer" class="hidden">${esc(f.answer)}</p>
+        <button class="btn" id="showAnswer">Mostra risposta</button>
+        <div style="margin-top:18px">
+          <button class="btn ghost" id="prevF">←</button>
+          <button class="btn ghost" id="nextF">→</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-head">
+        <h2>Gestisci</h2>
+        <div>
+          <button class="btn" id="generateFlashcardsAI">✨ Genera AI</button>
+          <button class="btn ghost" id="addFlash">+ Nuova</button>
+        </div>
+      </div>
+
+      ${fs.map(x=>`<div class="lesson-row">
+        <div class="grow">
+          <b>${esc(x.question)}</b>
+          <div class="muted">${esc(x.answer)}</div>
+        </div>
+        <button class="btn danger small" data-del-f="${x.id}">×</button>
+      </div>`).join("")}
+    </div>
+  </div>`;
+}function quizTab(d){
+  const qs=Array.isArray(d.questions)?d.questions:[];
+  if(!qs.length)return `<div class="panel"><div class="section-head"><h2>Quiz</h2><button class="btn" id="aiQuiz">🧠 Genera Quiz AI</button><button class="btn" id="addQ">+ Crea domanda</button></div><div class="empty">Nessuna domanda.</div></div>`;
+  if(state.quizCompleted){
+    return `<div class="panel" style="text-align:center;padding:32px">
+      <h2>Quiz completato</h2>
+      <div style="font-size:42px;font-weight:900;margin:14px 0">${state.quizScore}/${qs.length}</div>
+      <p class="muted">Hai completato tutte le domande.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+        <button class="btn" id="restartQuiz">Rifai quiz</button>
+      </div>
+    </div>`;
+  }
+  const index=Math.min(state.quizIndex,qs.length-1);
+  const q=qs[index];
+  const selected=state.quizAnswers[q.id];
+  const hasAnswer=selected!==undefined;
+  const correct=hasAnswer && Number(selected)===Number(q.answer_index);
+  return `<div class="panel">
+    <div class="section-head">
+      <div><h2>Quiz ${index+1}/${qs.length}</h2><span class="pill">Punteggio ${state.quizScore}</span></div>
+      <button class="btn" id="aiQuiz">🧠 Genera Quiz AI</button><button class="btn" id="addQ">+ Nuova domanda</button>
+    </div>
+    <h3>${esc(q.question)}</h3>
+    ${q.options.map((o,i)=>{
+      const cls=hasAnswer?(i===Number(q.answer_index)?" correct":(i===Number(selected)?" wrong":"")):(selected===i?" selected":"");
+      return `<button type="button" class="quiz-option${cls}" data-opt="${i}" ${hasAnswer?"disabled":""}>${esc(o)}</button>`;
+    }).join("")}
+    ${hasAnswer?`<div class="quiz-feedback ${correct?"correct":"wrong"}">${correct?"✓ Risposta corretta!":"✗ Risposta sbagliata. La risposta corretta è: "+esc(q.options[Number(q.answer_index)]||"")}</div>`:""}
+    <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="nextQ" ${hasAnswer?"":"disabled"}>${index===qs.length-1?"Termina quiz":"Prossima domanda"}</button>
+      <button class="btn ghost" id="resetQuestion">Azzera domanda</button>
+      <button class="btn ghost" id="resetQuiz">Azzera quiz</button>
+    </div>
+  </div>`;
+}
+function bindLesson(){document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{state.tab=b.dataset.tab;render()});$("#backLesson").onclick=()=>{state.view="lessons";render()};$("#complete").onclick=async()=>{await api("/lessons/"+state.lessonId,{method:"PATCH",body:JSON.stringify({completed:!state.lesson.lesson.completed})});render()};if($("#audioForm"))$("#audioForm").onsubmit=async e=>{e.preventDefault();const f=$("#audioFile").files[0];if(!f)return;const fd=new FormData();fd.append("audio",f);try{await api("/lessons/"+state.lessonId+"/audio",{method:"POST",body:fd});toast("Audio caricato");render()}catch(err){toast(err.message)}};bindRecorder();$("#removeAudio")?.addEventListener("click",async()=>{if(confirm("Rimuovere l'audio?")){await api("/lessons/"+state.lessonId+"/audio",{method:"DELETE"});render()}});$("#saveEditor")?.addEventListener("click",async()=>{const key=state.tab;await api("/lessons/"+state.lessonId,{method:"PATCH",body:JSON.stringify({[key]:$("#editor").value})});toast("Salvato");render()});$("#saveConcepts")?.addEventListener("click",async()=>{await api("/lessons/"+state.lessonId,{method:"PATCH",body:JSON.stringify({concepts:$("#concepts").value})});toast("Concetti salvati");render()});
+$("#autoMapConcepts")?.addEventListener("click",async()=>{
+  const button=$("#autoMapConcepts");
+  if(!button || button.disabled)return;
+
+  button.disabled=true;
+  button.textContent="⏳ Generazione...";
+
+  try{
+    const data=await api("/ai/concepts",{
+      method:"POST",
+      body:JSON.stringify({lessonId:state.lessonId})
+    });
+
+    toast("Concetti AI generati ("+data.usage.remaining+" rimasti)");
+    render();
+  }catch(e){
+    button.disabled=false;
+    button.textContent="✨ Genera automaticamente";
+    toast(e.message);
+  }
+});
+
+$("#tutorForm")?.addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const input=$("#tutorInput");
+  const q=input.value.trim();
+  if(!q)return;
+
+  const box=$("#tutorMessages");
+
+  box.insertAdjacentHTML("beforeend",
+    `<div class="tutor-msg tutor-user">${esc(q)}</div>`
+  );
+
+  input.value="";
+  box.scrollTop=box.scrollHeight;
+
+  try{
+    const data=await api("/ai/tutor",{
+      method:"POST",
+      body:JSON.stringify({
+        lessonId:state.lessonId,
+        question:q
+      })
+    });
+
+    const answer=data?.answer||"Non ho ricevuto una risposta dal Tutor.";
+
+    state.tutorHistory.push(
+      {role:"user",content:q},
+      {role:"assistant",content:answer}
+    );
+
+    state.tutorHistory=state.tutorHistory.slice(-10);
+
+    box.insertAdjacentHTML("beforeend",
+      `<div class="tutor-msg tutor-ai">${renderTutorAnswer(answer)}</div>`
+    );
+
+    box.scrollTop=box.scrollHeight;
+  }catch(err){
+    box.insertAdjacentHTML("beforeend",
+      `<div class="tutor-msg tutor-ai">${esc(err?.message||"Errore nel Tutor AI.")}</div>`
+    );
+
+    box.scrollTop=box.scrollHeight;
+  }
+});
+$("#tutorClear")?.addEventListener("click",()=>{
+  state.tutorHistory=[];
+  render();
+});
+$("#saveMapConcepts")?.addEventListener("click",async()=>{
+  await api("/lessons/"+state.lessonId,{method:"PATCH",body:JSON.stringify({concepts:$("#mapConcepts").value})});
+  toast("Mappa aggiornata");
+  render();
+});
+$("#regenMap")?.addEventListener("click",()=>{state.tab="map";render()});
+$("#analyzeLesson")?.addEventListener("click",async()=>{
+  try{
+    const data=await api("/ai/analyze-lesson",{
+      method:"POST",
+      body:JSON.stringify({lessonId:state.lessonId})
+    });
+
+    toast(data.message||"Analisi della lezione avviata.");
+  }catch(e){
+    toast(e.message);
+  }
+});
+$("#demoAI")?.addEventListener("click",async()=>{try{const data=await api("/ai/summary",{method:"POST",body:JSON.stringify({lessonId:state.lessonId})});toast("Riassunto AI generato ("+data.usage.remaining+" rimasti)");render()}catch(e){toast(e.message)}});$("#addFlash")?.addEventListener("click",()=>flashModal());
+
+$("#generateFlashcardsAI")?.addEventListener("click",async()=>{
+  try{
+    const data=await api("/ai/flashcards",{
+      method:"POST",
+      body:JSON.stringify({lessonId:state.lessonId})
+    });
+
+    toast("Flashcard AI generate ("+data.usage.remaining+" rimaste)");
+    render();
+  }catch(e){
+    toast(e.message);
+  }
+});$("#aiTranscript")?.addEventListener("click",async()=>{try{const data=await api("/ai/transcript",{method:"POST",body:JSON.stringify({lessonId:state.lessonId})});toast("Trascrizione AI completata ("+data.usage.remaining+" rimasti)");render()}catch(e){toast(e.message)}});document.querySelectorAll("[data-del-f]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminare flashcard?")){await api("/flashcards/"+b.dataset.delF,{method:"DELETE"});render()}});$("#showAnswer")?.addEventListener("click",()=>{$("#answer").classList.toggle("hidden");$("#showAnswer").textContent=$("#answer").classList.contains("hidden")?"Mostra risposta":"Nascondi risposta"});const flashcards=state.lesson?.flashcards||[];if(flashcards.length){if(state.flashIndex>=flashcards.length)state.flashIndex=0;$("#prevF")?.addEventListener("click",()=>{state.flashIndex=(state.flashIndex-1+flashcards.length)%flashcards.length;render()});$("#nextF")?.addEventListener("click",()=>{state.flashIndex=(state.flashIndex+1)%flashcards.length;render()})}$("#addQ")?.addEventListener("click",()=>questionModal());
+  const quizBox=$("#lessonContent");
+  if(quizBox){
+    quizBox.onclick=async e=>{
+      const opt=e.target.closest("[data-opt]");
+      if(opt){
+        e.preventDefault();
+        const q=state.lesson?.questions?.[state.quizIndex];
+        if(!q || state.quizAnswers[q.id]!==undefined) return;
+        const answer=Number(opt.dataset.opt);
+        state.quizAnswers[q.id]=answer;
+        if(answer===Number(q.answer_index)) state.quizScore++;
+        render();
+        return;
+      }
+      const resetQuestion=e.target.closest("#resetQuestion");
+      if(resetQuestion){
+        e.preventDefault();
+        const q=state.lesson?.questions?.[state.quizIndex];
+        if(q) delete state.quizAnswers[q.id];
+        render();
+        return;
+      }
+      const resetQuiz=e.target.closest("#resetQuiz");
+      if(resetQuiz){
+        e.preventDefault();
+        state.quizIndex=0; state.quizScore=0; state.quizAnswers={}; state.quizCompleted=false;
+        render();
+        return;
+      }
+      const next=e.target.closest("#nextQ");
+      if(next){
+        e.preventDefault();
+        const q=state.lesson?.questions?.[state.quizIndex];
+        if(!q || state.quizAnswers[q.id]===undefined){toast("Seleziona una risposta prima di continuare.");return}
+        if(state.quizIndex<(state.lesson?.questions?.length||0)-1){
+          state.quizIndex++;
+          render();
+        }else{
+          state.quizCompleted=true;
+          render();
+        }
+        return;
+      }
+      const restart=e.target.closest("#restartQuiz");
+      if(restart){
+        e.preventDefault();
+        state.quizIndex=0; state.quizScore=0; state.quizAnswers={}; state.quizCompleted=false;
+        render();
+      }
+    };
+  }
+}
+function bindRecorder(){
+  const start=$("#startRecord"), pause=$("#pauseRecord"), stop=$("#stopRecord"), timer=$("#recordTimer"), status=$("#recordStatus");
+  if(!start) return;
+  let recorder=null, chunks=[], startedAt=0, timerId=null, stream=null;
+  const setTime=()=>{const s=Math.floor((Date.now()-startedAt)/1000);timer.textContent=String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+  start.onclick=async()=>{
+    try{
+      if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw new Error("La registrazione dal browser non è supportata su questo dispositivo.");
+      stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      const mime=["audio/webm;codecs=opus","audio/webm","audio/ogg;codecs=opus"].find(x=>MediaRecorder.isTypeSupported(x))||"";
+      recorder=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+      chunks=[]; recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+      recorder.onstop=async()=>{
+        clearInterval(timerId); timer.classList.add("hidden"); pause.classList.add("hidden"); stop.classList.add("hidden"); start.classList.remove("hidden");
+        stream?.getTracks().forEach(t=>t.stop());
+        const blob=new Blob(chunks,{type:recorder.mimeType||"audio/webm"});
+        const ext=(blob.type.includes("ogg")?"ogg":"webm");
+        const file=new File([blob],"registrazione_"+new Date().toISOString().replace(/[:.]/g,"-")+"."+ext,{type:blob.type||"audio/webm"});
+        const fd=new FormData(); fd.append("audio",file);
+        status.textContent="Salvataggio registrazione...";
+        try{await api("/lessons/"+state.lessonId+"/audio",{method:"POST",body:fd});toast("Registrazione salvata");render()}
+        catch(err){status.textContent="Errore nel salvataggio: "+err.message}
+      };
+      recorder.start(250); startedAt=Date.now(); timer.classList.remove("hidden"); pause.classList.remove("hidden"); stop.classList.remove("hidden"); start.classList.add("hidden"); status.textContent="Registrazione in corso..."; timerId=setInterval(setTime,1000); setTime();
+    }catch(err){status.textContent=err.message}
+  };
+  pause.onclick=()=>{
+    if(!recorder) return;
+    if(recorder.state==="recording"){recorder.pause();pause.textContent="? Riprendi";status.textContent="Registrazione in pausa."}
+    else if(recorder.state==="paused"){recorder.resume();pause.textContent="? Pausa";status.textContent="Registrazione in corso..."}
+  };
+  stop.onclick=()=>{if(recorder && recorder.state!=="inactive")recorder.stop()};
+}
+function flashModal(){const m=modal("Nuova flashcard",`<form class="form" id="f"><input id="q" placeholder="Domanda" required><textarea id="a" placeholder="Risposta" required></textarea><button class="btn">Crea flashcard</button></form>`);m.querySelector("#f").onsubmit=async e=>{e.preventDefault();await api("/lessons/"+state.lessonId+"/flashcards",{method:"POST",body:JSON.stringify({question:m.querySelector("#q").value,answer:m.querySelector("#a").value})});m.remove();render()}}
+function questionModal(){const m=modal("Nuova domanda quiz",`<form class="form" id="f"><input id="q" placeholder="Domanda" required><input id="a" placeholder="Opzione A" required><input id="b" placeholder="Opzione B" required><input id="c" placeholder="Opzione C"><input id="d" placeholder="Opzione D"><select id="correct"><option value="0">Corretta: A</option><option value="1">Corretta: B</option><option value="2">Corretta: C</option><option value="3">Corretta: D</option></select><button class="btn">Crea domanda</button></form>`);m.querySelector("#f").onsubmit=async e=>{e.preventDefault();const opts=[m.querySelector("#a").value,m.querySelector("#b").value,m.querySelector("#c").value,m.querySelector("#d").value].filter(Boolean);await api("/lessons/"+state.lessonId+"/questions",{method:"POST",body:JSON.stringify({question:m.querySelector("#q").value,options:opts,answer_index:Number(m.querySelector("#correct").value)})});m.remove();render()}}
+
+function showEditSubscription(subscription){
+  const root=document.getElementById("root");
+
+  root.innerHTML=layout(`
+    <section class="hero">
+      <h1>Modifica abbonamento ??</h1>
+      <p>${esc(subscription.email||"Utente")}</p>
+    </section>
+
+    <div class="section">
+      <div class="panel">
+
+        <label>Piano</label>
+        <select id="editSubPlan" style="width:100%;margin:8px 0 14px;padding:10px;border-radius:9px">
+          <option value="FREE" ${subscription.plan==="FREE"?"selected":""}>FREE</option>
+          <option value="PREMIUM" ${subscription.plan==="PREMIUM"?"selected":""}>PREMIUM</option>
+        </select>
+
+        <label>Stato</label>
+        <select id="editSubStatus" style="width:100%;margin:8px 0 14px;padding:10px;border-radius:9px">
+          <option value="ACTIVE" ${subscription.status==="ACTIVE"?"selected":""}>ACTIVE</option>
+          <option value="EXPIRED" ${subscription.status==="EXPIRED"?"selected":""}>EXPIRED</option>
+          <option value="CANCELLED" ${subscription.status==="CANCELLED"?"selected":""}>CANCELLED</option>
+        </select>
+
+        <label>Scadenza</label>
+        <input
+          id="editSubExpiry"
+          type="datetime-local"
+          value="${subscription.expires_at ? subscription.expires_at.slice(0,16) : ""}"
+          style="width:100%;margin:8px 0 14px;padding:10px;border-radius:9px"
+        >
+
+        <label>Importo (€)</label>
+        <input
+          id="editSubAmount"
+          type="number"
+          min="0"
+          step="0.01"
+          value="${Number(subscription.amount||0).toFixed(2)}"
+          style="width:100%;margin:8px 0 14px;padding:10px;border-radius:9px"
+        >
+
+        <label style="display:flex;gap:8px;align-items:center;margin:8px 0 18px">
+          <input
+            id="editSubAutoRenew"
+            type="checkbox"
+            ${Number(subscription.auto_renew)===1?"checked":""}
+          >
+          Auto-rinnovo attivo
+        </label>
+
+        <button id="saveSubscriptionBtn"
+          style="padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">
+          💾 Salva modifiche
+        </button>
+
+        <button id="cancelSubscriptionEdit"
+          style="margin-left:8px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer">
+          Annulla
+        </button>
+
+        <div id="subscriptionEditMessage" class="muted" style="margin-top:14px"></div>
+
+      </div>
+    </div>
+  `);
+
+  document.getElementById("cancelSubscriptionEdit")
+    ?.addEventListener("click",loadAdminSubscriptions);
+
+  document.getElementById("saveSubscriptionBtn")
+    ?.addEventListener("click",async()=>{
+      const message=document.getElementById("subscriptionEditMessage");
+
+      try{
+        const updated=await api(
+          "/admin/subscriptions/"+subscription.id,
+          {
+            method:"PUT",
+            body:JSON.stringify({
+              plan:document.getElementById("editSubPlan").value,
+              status:document.getElementById("editSubStatus").value,
+              expires_at:document.getElementById("editSubExpiry").value || null,
+              amount:Number(document.getElementById("editSubAmount").value),
+              auto_renew:document.getElementById("editSubAutoRenew").checked
+            })
+          }
+        );
+
+        message.textContent="Modifiche salvate correttamente.";
+        message.style.marginTop="14px";
+
+        setTimeout(()=>{
+          loadAdminSubscriptions();
+        },700);
+
+      }catch(error){
+        message.textContent=error.message||"Errore durante il salvataggio.";
+      }
+    });
+}
+async function loadAdminSubscriptions(){
+  const subscriptions=await api("/admin/subscriptions");
+
+  document.getElementById("root").innerHTML=layout(`
+    <section class="hero">
+      <h1>Abbonamenti 💳</h1>
+      <p>Gestione degli abbonamenti StudyAI</p>
+    </section>
+
+    <div class="section">
+      <div class="panel" id="adminSubscriptionsList">
+        ${subscriptions.length ? subscriptions.map(s=>`
+          <div class="lesson-row" style="align-items:flex-start">
+            <div class="icon">👤</div>
+
+            <div class="grow">
+              <b>${esc(s.email||"Utente")}</b>
+              <div class="muted">${esc(s.name||"")}</div>
+
+              <div class="muted" style="margin-top:6px">
+                Piano: <b>${esc(s.plan||"FREE")}</b>
+                · Stato: <b>${esc(s.status||"")}</b>
+              </div>
+
+              <div class="muted" style="margin-top:4px">
+                Scadenza: ${esc(s.expires_at||"—")}
+                · Auto-rinnovo: ${Number(s.auto_renew)===1?"Attivo":"Disattivo"}
+              </div>
+            </div>
+
+            <div style="text-align:right">
+              <b>€ ${Number(s.amount||0).toFixed(2)}</b>
+
+              <div style="margin-top:10px">
+                <button
+                  class="admin-edit-subscription"
+                  data-id="${s.id}"
+                  style="padding:8px 12px;border:0;border-radius:9px;cursor:pointer;font-weight:700">
+                  ✏️ Modifica
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join("") : `
+          <div class="empty">Nessun abbonamento presente.</div>
+        `}
+      </div>
+    </div>
+  `);
+
+  document.querySelectorAll(".admin-edit-subscription").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const subscription=subscriptions.find(
+        s=>String(s.id)===String(btn.dataset.id)
+      );
+
+      if(subscription) showEditSubscription(subscription);
+    });
+  });
+
+  bindCommon();
+}
+async function loadAdminAnalytics(){
+  const analytics=await api("/admin/analytics");
+
+  document.getElementById("root").innerHTML=layout(`
+    <section class="hero">
+      <h1>Analytics Admin 📊</h1>
+      <p>Attività amministrativa di StudyAI</p>
+      <button id="adminBackBtn" style="margin-top:14px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">← Dashboard</button>
+    </section>
+
+    <div class="stats section">
+      <div class="panel stat">
+        <strong>${analytics.statusUpdates}</strong>
+        <span>Modifiche stato account</span>
+      </div>
+      <div class="panel stat">
+        <strong>${analytics.roleUpdates}</strong>
+        <span>Modifiche ruolo</span>
+      </div>
+      <div class="panel stat">
+        <strong>${analytics.subscriptionUpdates}</strong>
+        <span>Modifiche abbonamenti</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="panel">
+        <h2>Attività per tipo</h2>
+        ${analytics.auditByAction?.length ? analytics.auditByAction.map(x=>`
+          <div class="lesson-row">
+            <div class="icon">👤</div>
+            <div class="grow">
+              <b>${esc(x.action)}</b>
+            </div>
+            <span class="badge">${x.count}</span>
+          </div>
+        `).join("") : `<div class="empty">Nessuna attività disponibile.</div>`}
+      </div>
+    </div>
+  `);
+
+  document.getElementById("adminBackBtn")?.addEventListener("click",loadAdmin);
+}
+
+async function loadAdminAIUsage(){
+  const usage=await api("/admin/ai-usage");
+
+  document.getElementById("root").innerHTML=layout(`
+    <section class="hero">
+      <h1>AI & Usage 🤖</h1>
+      <p>Utilizzo delle funzionalità AI di StudyAI</p>
+      <button id="adminAIBackBtn" style="margin-top:14px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">← Dashboard</button>
+    </section>
+
+    <div class="stats section">
+      <div class="panel stat">
+        <strong>${Number(usage.total||0)}</strong>
+        <span>Unità AI utilizzate</span>
+      </div>
+      <div class="panel stat">
+        <strong>${usage.byFeature?.length||0}</strong>
+        <span>Funzionalità AI utilizzate</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="panel">
+        <h2>Utilizzo per funzionalità</h2>
+        ${usage.byFeature?.length ? usage.byFeature.map(x=>`
+          <div class="lesson-row">
+            <div class="icon">👤</div>
+            <div class="grow"><b>${esc(x.feature||"AI")}</b></div>
+            <span class="badge">${Number(x.units||0)}</span>
+          </div>
+        `).join("") : `
+          <div class="empty">Nessun utilizzo AI registrato.</div>
+        `}
+      </div>
+    </div>
+  `);
+
+  document.getElementById("adminAIBackBtn")?.addEventListener("click",loadAdmin);
+}
+
+async function loadAdmin(){
+  const stats=await api("/admin/stats");
+  const logs=await api("/admin/audit-logs");
+  const users=await api("/admin/users");
+
+  document.getElementById("root").innerHTML=layout(`
+    <section class="hero">
+      <h1>Admin Dashboard 🛠️</h1>
+      <p>Panoramica amministrativa di StudyAI</p>
+<button id="adminSubscriptionsBtn" style="margin-top:14px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">💳 Abbonamenti</button><button id="adminAIUsageBtn" style="margin-top:14px;margin-left:8px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">🤖 AI & Usage</button><button id="adminAnalyticsBtn" style="margin-top:14px;margin-left:8px;padding:10px 16px;border:0;border-radius:10px;cursor:pointer;font-weight:700">📊 Analytics</button>
+    </section>
+
+    <div class="stats section">
+      <div class="panel stat">
+        <strong>${stats.totalUsers}</strong>
+        <span>Utenti registrati</span>
+      </div>
+      <div class="panel stat">
+        <strong>${stats.premiumUsers}</strong>
+        <span>Utenti Premium</span>
+      </div>
+      <div class="panel stat">
+        <strong>${stats.blockedUsers}</strong>
+        <span>Utenti bloccati</span>
+      </div>
+      <div class="panel stat">
+        <strong>€ ${Number(stats.premiumRevenue||0).toFixed(2)}</strong>
+        <span>Ricavi Premium</span>
+      </div>
+      <div class="panel stat">
+        <strong>${stats.autoRenewUsers}</strong>
+        <span>Auto-rinnovi attivi</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <h2>Utenti registrati</h2>
+          <span class="muted">${users.length} utenti</span>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+  <input
+    id="adminUserSearch"
+    placeholder="Cerca utente..."
+    style="max-width:300px;padding:11px 13px;border:1px solid var(--line);border-radius:11px;outline:none"
+  >
+
+  <select
+    id="adminUserRoleFilter"
+    style="padding:11px 13px;border:1px solid var(--line);border-radius:11px;outline:none"
+  >
+    <option value="">Tutti i ruoli</option>
+    <option value="STUDENT">STUDENT</option>
+    <option value="SUPPORT">SUPPORT</option>
+    <option value="ADMIN">ADMIN</option>
+    <option value="SUPER_ADMIN">SUPER_ADMIN</option>
+  </select>
+<select
+  id="adminUserStatusFilter"
+  style="padding:11px 13px;border:1px solid var(--line);border-radius:11px;outline:none"
+>
+  <option value="">Tutti gli stati</option>
+  <option value="ACTIVE">ACTIVE</option>
+  <option value="BLOCKED">BLOCKED</option>
+</select>
+<select
+  id="adminUserPlanFilter"
+  style="padding:11px 13px;border:1px solid var(--line);border-radius:11px;outline:none"
+>
+  <option value="">Tutti i piani</option>
+  <option value="FREE">FREE</option>
+  <option value="PREMIUM">PREMIUM</option>
+</select>
+</div>
+      </div>
+
+      <div class="panel" id="adminUsersList">
+        ${users.length ? users.map(u=>`
+  <div class="lesson-row" data-user-id="${u.id}" style="cursor:pointer">
+    <div class="icon">👤</div>
+    <div class="grow">
+      <b>${esc(u.name||"Studente")}</b>
+      <div class="muted">${esc(u.email||"")}</div>
+      <div class="muted">Registrato: ${esc(u.created_at||"")}</div>
+    </div>
+    <span class="badge">${esc(u.role||"STUDENT")}</span>
+    <span class="muted">›</span>
+  </div>
+`).join("") : `<div class="empty">Nessun utente registrato.</div>`}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Ultime attività</h2>
+      </div>
+
+      <div class="panel">
+        ${logs.length ? logs.slice(0,10).map(x=>`
+          <div class="lesson-row">
+            <div class="icon">📋</div>
+            <div class="grow">
+              <b>${esc(x.action)}</b>
+              <div class="muted">${esc(x.email||"Sistema")} · ${esc(x.created_at||"")}</div>
+              <div class="muted">${esc(x.details||"")}</div>
+            </div>
+          </div>
+        `).join("") : `<div class="empty">Nessuna attività registrata.</div>`}
+      </div>
+    </div>
+  `);
+
+  bindCommon();
+
+  const adminSearch=$("#adminUserSearch");
+  const adminUsersList=$("#adminUsersList");
+const adminRoleFilter=$("#adminUserRoleFilter");
+  const adminStatusFilter=$("#adminUserStatusFilter");
+  const adminPlanFilter=$("#adminUserPlanFilter");
+adminUsersList?.addEventListener("click",async (e)=>{
+  const row=e.target.closest("[data-user-id]");
+  if(!row)return;
+
+  const userId=row.dataset.userId;
+  const user=users.find(u=>String(u.id)===String(userId));
+  if(!user)return;
+
+  let subscription=null;
+  try{
+    subscription=await api("/admin/users/"+user.id+"/subscription");
+  }catch(e){
+    console.error("Errore caricamento abbonamento:",e);
+  }
+
+  document.getElementById("adminUserDetailOverlay")?.remove();
+
+  document.body.insertAdjacentHTML("beforeend",`
+    <div id="adminUserDetailOverlay"
+         style="
+           position:fixed;
+           inset:0;
+           background:rgba(0,0,0,.55);
+           display:flex;
+           align-items:center;
+           justify-content:center;
+           padding:20px;
+           z-index:9999;
+         ">
+      <div style="
+        width:min(520px,100%);
+        background:white;
+        border-radius:18px;
+        padding:24px;
+        box-shadow:0 20px 60px rgba(0,0,0,.25);
+      ">
+        <div style="
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:15px;
+          margin-bottom:20px;
+        ">
+          <div>
+            <h2 style="margin:0 0 5px">Dettaglio utente</h2>
+            <div class="muted">ID utente: ${esc(user.id)}</div>
+          </div>
+
+          <button id="closeAdminUserDetail"
+                  style="
+                    border:0;
+                    background:#f1f1f5;
+                    width:38px;
+                    height:38px;
+                    border-radius:50%;
+                    cursor:pointer;
+                    font-size:20px;
+                  ">×</button>
+        </div>
+
+<div style="
+  display:grid;
+  gap:12px;
+">
+  <div class="panel">
+    <div class="muted">Nome</div>
+    <strong>${esc(user.name||"Studente")}</strong>
+  </div>
+
+  <div class="panel">
+    <div class="muted">Email</div>
+    <strong>${esc(user.email||"")}</strong>
+  </div>
+
+  <div class="panel">
+  <div class="muted" style="margin-bottom:8px">Ruolo</div>
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <select
+      id="adminUserRole"
+      style="padding:10px 12px;border:1px solid var(--line);border-radius:9px;outline:none"
+    >
+      <option value="STUDENT" ${user.role==="STUDENT"?"selected":""}>STUDENT</option>
+      <option value="SUPPORT" ${user.role==="SUPPORT"?"selected":""}>SUPPORT</option>
+      <option value="ADMIN" ${user.role==="ADMIN"?"selected":""}>ADMIN</option>
+      <option value="SUPER_ADMIN" ${user.role==="SUPER_ADMIN"?"selected":""}>SUPER_ADMIN</option>
+    </select>
+
+    <button
+      id="saveAdminUserRole"
+      style="padding:9px 13px;border:0;border-radius:9px;cursor:pointer;font-weight:700"
+    >
+      💾 Salva ruolo
+    </button>
+  </div>
+
+  <div id="adminUserRoleMessage" class="muted" style="margin-top:8px"></div>
+<div class="panel" style="margin-top:12px">
+  <div class="muted" style="margin-bottom:8px">Stato account</div>
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+    <select
+      id="adminUserStatus"
+      style="padding:10px 12px;border:1px solid var(--line);border-radius:9px;outline:none"
+    >
+      <option value="ACTIVE" ${user.status==="ACTIVE"?"selected":""}>ACTIVE</option>
+      <option value="BLOCKED" ${user.status==="BLOCKED"?"selected":""}>BLOCKED</option>
+    </select>
+
+    <button
+      id="saveAdminUserStatus"
+      style="padding:9px 13px;border:0;border-radius:9px;cursor:pointer;font-weight:700"
+    >
+      💾 Salva stato
+    </button>
+  </div>
+
+  <div id="adminUserStatusMessage" class="muted" style="margin-top:8px"></div>
+</div>
+</div>
+
+  <div class="panel">
+    <div class="muted">Registrazione</div>
+    <strong>${esc(user.created_at||"")}</strong>
+  </div>
+
+  <div class="panel">
+    <div style="margin-bottom:12px">
+      <div class="muted">Abbonamento</div>
+    </div>
+
+    ${
+      subscription
+      ? `
+        <div style="display:grid;gap:9px">
+          <div><span class="muted">Piano</span><br><strong>${esc(subscription.plan||"FREE")}</strong></div>
+          <div><span class="muted">Stato</span><br><strong>${esc(subscription.status||"")}</strong></div>
+          <div><span class="muted">Inizio</span><br><strong>${esc(subscription.started_at||"—")}</strong></div>
+          <div><span class="muted">Scadenza</span><br><strong>${esc(subscription.expires_at||"—")}</strong></div>
+          <div><span class="muted">Importo</span><br><strong>€ ${Number(subscription.amount||0).toFixed(2)}</strong></div>
+          <div><span class="muted">Auto-rinnovo</span><br><strong>${Number(subscription.auto_renew)===1?"Attivo":"Disattivato"}</strong></div>
+        </div>
+      `
+      : `<div class="muted">Nessun abbonamento presente.</div>`
+    }
+  </div>
+
+  <div class="panel">
+    <div style="margin-bottom:12px">
+      <div class="muted">Attività recente</div>
+    </div>
+
+    ${
+      logs.filter(x=>String(x.user_id)===String(user.id)).length
+      ? logs
+          .filter(x=>String(x.user_id)===String(user.id))
+          .slice(0,10)
+          .map(x=>`
+            <div style="
+              padding:10px 0;
+              border-top:1px solid var(--line);
+            ">
+              <b>${esc(x.action||"Attività")}</b>
+              <div class="muted">${esc(x.created_at||"")}</div>
+              ${x.details ? `<div class="muted">${esc(x.details)}</div>` : ""}
+            </div>
+          `).join("")
+      : `<div class="muted">Nessuna attività registrata.</div>`
+    }
+  </div>
+</div>
+  `);
+
+  document.getElementById("closeAdminUserDetail")
+    ?.addEventListener("click",()=>{
+      document.getElementById("adminUserDetailOverlay")?.remove();
+    });
+document.getElementById("saveAdminUserRole")
+  ?.addEventListener("click",async()=>{
+    const message=document.getElementById("adminUserRoleMessage");
+    const role=document.getElementById("adminUserRole")?.value;
+
+    try{
+      const updated=await api(
+        "/admin/users/"+user.id+"/role",
+        {
+          method:"PUT",
+          body:JSON.stringify({role})
+        }
+      );
+
+      const index=users.findIndex(u=>String(u.id)===String(updated.id));
+
+      if(index!==-1){
+        users[index]=updated;
+      }
+
+message.textContent="Ruolo salvato correttamente.";
+
+setTimeout(()=>{
+  loadAdmin();
+},700);    }catch(error){
+      message.textContent=error.message||"Errore durante il salvataggio.";
+    }
+  });
+
+  document.getElementById("adminUserDetailOverlay")
+    ?.addEventListener("click",(e)=>{
+      if(e.target.id==="adminUserDetailOverlay"){
+        e.currentTarget.remove();
+      }
+    });
+document.getElementById("saveAdminUserStatus")
+  ?.addEventListener("click",async()=>{
+    const message=document.getElementById("adminUserStatusMessage");
+    const status=document.getElementById("adminUserStatus")?.value;
+
+    try{
+      const updated=await api(
+        "/admin/users/"+user.id+"/status",
+        {
+          method:"PUT",
+          body:JSON.stringify({status})
+        }
+      );
+
+      const index=users.findIndex(u=>String(u.id)===String(updated.id));
+      if(index!==-1){
+        users[index]=updated;
+      }
+
+      message.textContent="Stato account salvato correttamente.";
+      setTimeout(()=>{ loadAdmin(); },700);
+
+    }catch(error){
+      message.textContent=error.message||"Errore durante il salvataggio.";
+    }
+  });
+});
+document.getElementById("adminSubscriptionsBtn")?.addEventListener("click",loadAdminSubscriptions);
+document.getElementById("adminAIUsageBtn")?.addEventListener("click",loadAdminAIUsage);
+document.getElementById("adminAnalyticsBtn")?.addEventListener("click",loadAdminAnalytics);
+
+  const filterAdminUsers=()=>{
+  const q=adminSearch?.value.trim().toLowerCase()||"";
+  const role=adminRoleFilter?.value||"";
+  const status=adminStatusFilter?.value||"";
+  const plan=adminPlanFilter?.value||"";
+
+  const filtered=users.filter(u=>
+    (
+      String(u.name||"").toLowerCase().includes(q) ||
+      String(u.email||"").toLowerCase().includes(q) ||
+      String(u.role||"").toLowerCase().includes(q)
+    ) &&
+    (!role || String(u.role||"STUDENT")===role) &&
+    (!status || String(u.status||"ACTIVE")===status) &&
+    (!plan || String(u.plan||"FREE")===plan)
+  );
+  adminUsersList.innerHTML=filtered.length ? filtered.map(u=>`
+    <div class="lesson-row" data-user-id="${u.id}" style="cursor:pointer">
+      <div class="icon">👤</div>
+      <div class="grow">
+        <b>${esc(u.name||"Studente")}</b>
+        <div class="muted">${esc(u.email||"")}</div>
+        <div class="muted">Registrato: ${esc(u.created_at||"")}</div>
+      </div>
+      <span class="badge">${esc(u.role||"STUDENT")}</span>
+      <span class="muted">›</span>
+    </div>
+  `).join("") : `<div class="empty">Nessun utente trovato.</div>`;
+};
+
+adminSearch?.addEventListener("input",filterAdminUsers);
+adminRoleFilter?.addEventListener("change",filterAdminUsers);
+adminStatusFilter?.addEventListener("change",filterAdminUsers);
+adminPlanFilter?.addEventListener("change",filterAdminUsers);
+}
+
+async function loadStats(){const d=await api("/stats");document.getElementById("root").innerHTML=layout(`<div class="section-head"><h2>Statistiche</h2></div><div class="stats"><div class="panel stat"><strong>${d.courses}</strong><span>Corsi</span></div><div class="panel stat"><strong>${d.subjects}</strong><span>Materie</span></div><div class="panel stat"><strong>${d.lessons}</strong><span>Lezioni</span></div><div class="panel stat"><strong>${d.percent}%</strong><span>Completamento</span></div></div><div class="grid two section"><div class="panel"><h2>Progresso</h2><div class="progress" style="margin:20px 0"><i style="width:${d.percent}%"></i></div><p>${d.completed} lezioni completate su ${d.lessons}</p></div><div class="panel"><h2>Audio</h2><p style="font-size:28px;font-weight:900">${d.audio}</p><p class="muted">registrazioni caricate</p></div></div>`);bindCommon()}
+async function noteModal(note, lessons){
+  const options=lessons.map(l=>`<option value="${l.id}" ${note&&String(note.lesson_id)===String(l.id)?"selected":""}>${esc(l.title)} · ${esc(l.subject_name||"")}</option>`).join("");
+  const m=modal(note?"Modifica appunto":"Nuovo appunto",`<form class="form" id="noteForm"><select id="lessonId" ${note?"disabled":""} required>${options}</select><textarea id="noteBody" rows="9" placeholder="Scrivi il tuo appunto..." required>${esc(note?.body||"")}</textarea><button class="btn">${note?"Salva modifiche":"Salva appunto"}</button></form>`);
+  m.querySelector("#noteForm").onsubmit=async e=>{
+    e.preventDefault();
+    const body=m.querySelector("#noteBody").value.trim();
+    if(!body)return;
+    if(note) await api("/notes/"+note.id,{method:"PATCH",body:JSON.stringify({body})});
+    else await api("/lessons/"+m.querySelector("#lessonId").value+"/notes",{method:"POST",body:JSON.stringify({body})});
+    m.remove(); loadNotes();
+  };
+}
+async function loadNotes(){
+  const d=await api("/dashboard");
+  const lessonDetails=await Promise.all((d.lessons||[]).map(l=>api("/lessons/"+l.id).catch(()=>null)));
+  const lessons=(d.lessons||[]).map((l,i)=>({...l,...((lessonDetails[i]||{}).lesson||{})}));
+  const notes=[];
+  lessonDetails.forEach((x,i)=>{
+    (x?.notes||[]).forEach(n=>notes.push({...n,lesson_title:lessons[i]?.title||"",course_name:lessons[i]?.course_name||"",subject_name:lessons[i]?.subject_name||""}));
+  });
+  state.notes=notes;
+  document.getElementById("root").innerHTML=layout(`<div class="section-head"><div><h2>Appunti</h2><p class="muted">Raccogli e modifica i tuoi appunti collegandoli alle lezioni.</p></div><button class="btn" id="newNote">+ Nuovo appunto</button></div><div class="notes-toolbar"><input class="notes-search" id="noteSearch" placeholder="Cerca negli appunti..." value=""></div><div id="notesList" class="notes-grid"></div>`);
+  bindCommon();
+  const renderNotes=()=>{
+    const q=($("#noteSearch")?.value||"").trim().toLowerCase();
+    const filtered=notes.filter(n=>(`${n.body} ${n.lesson_title} ${n.subject_name} ${n.course_name}`).toLowerCase().includes(q));
+    $("#notesList").innerHTML=filtered.length?filtered.map(n=>`<article class="note-card"><h3>${esc(n.lesson_title)}</h3><div class="note-meta">${esc(n.course_name)} · ${esc(n.subject_name)}${n.updated_at?` · ${esc(n.updated_at)}`:""}</div><div class="note-body">${esc(n.body)}</div><div class="note-actions"><button class="btn ghost small" data-edit-note="${n.id}">✏️ Modifica</button><button class="btn danger small" data-delete-note="${n.id}">× Elimina</button><button class="btn small" data-open-note-lesson="${n.lesson_id}">Apri lezione</button></div></article>`).join(""):`<div class="panel empty" style="grid-column:1/-1">${q?"Nessun appunto trovato.":"Nessun appunto ancora. Crea il primo per iniziare."}</div>`;
+    document.querySelectorAll("[data-edit-note]").forEach(b=>b.onclick=()=>{const n=notes.find(x=>String(x.id)===String(b.dataset.editNote));noteModal(n,lessons)});
+    document.querySelectorAll("[data-delete-note]").forEach(b=>b.onclick=async()=>{if(confirm("Eliminare questo appunto?")){await api("/notes/"+b.dataset.deleteNote,{method:"DELETE"});loadNotes()}});
+    document.querySelectorAll("[data-open-note-lesson]").forEach(b=>b.onclick=()=>{state.lessonId=b.dataset.openNoteLesson;state.view="lesson";state.tab="transcript";render()});
+  };
+  $("#newNote").onclick=()=>noteModal(null,lessons);
+  $("#noteSearch").oninput=renderNotes;
+  renderNotes();
+}
+async function loadCategory(){
+  if(state.view==="notes")return loadNotes();
+  const d=await api("/dashboard");
+  if(state.view==="maps"){
+    const details=await Promise.all((d.lessons||[]).map(l=>api("/lessons/"+l.id).catch(()=>null)));
+    const maps=(d.lessons||[]).map((l,i)=>({...l,...((details[i]||{}).lesson||{})})).filter(l=>String(l.concepts||"").trim());
+    const courses=[...new Set(maps.map(l=>String(l.course_name||"").trim()).filter(Boolean))].sort();
+    const subjects=[...new Set(maps.map(l=>String(l.subject_name||"").trim()).filter(Boolean))].sort();
+    const cards=maps.map(l=>{
+      const concepts=String(l.concepts||"").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
+      return `<article class="map-card" data-map-card data-course="${esc(l.course_name||"")}" data-subject="${esc(l.subject_name||"")}" data-search="${esc((l.title+" "+(l.course_name||"")+" "+(l.subject_name||"")+" "+concepts.join(" ")).toLowerCase())}">
+        <div class="map-card-head"><div><h3>${esc(l.title)}</h3><div class="muted">${esc(l.course_name||"")} · ${esc(l.subject_name||"")}</div></div><span class="badge">${concepts.length} concetti</span></div>
+        <div class="map-mini"><div class="map-mini-center">${esc(l.title)}</div>${concepts.map(c=>`<span>${esc(c)}</span>`).join("")}</div>
+        <div class="map-card-actions"><button class="btn small" data-open-map="${l.id}">Apri mappa</button><button class="btn ghost small" data-edit-map="${l.id}">Modifica concetti</button></div>
+      </article>`;
+    }).join("");
+    const courseOptions=courses.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    const subjectOptions=subjects.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+    document.getElementById("root").innerHTML=layout(`<div class="section-head"><div><h2>Mappe concettuali</h2><p class="muted">Tutte le mappe create dalle tue lezioni, in un unico spazio.</p></div></div>
+      <div class="maps-toolbar"><input id="mapSearch" placeholder="Cerca lezione o concetto..."><select id="mapCourse"><option value="">Tutti i corsi</option>${courseOptions}</select><select id="mapSubject"><option value="">Tutte le materie</option>${subjectOptions}</select></div>
+      <div class="maps-grid">${cards||`<div class="panel empty" style="grid-column:1/-1"><h3>Nessuna mappa ancora</h3><p>Crea o genera i concetti dentro una lezione per vedere qui la relativa mappa.</p></div>`}</div>`);
+    bindCommon();
+    const filterMaps=()=>{
+      const q=($("#mapSearch")?.value||"").toLowerCase().trim(), c=$("#mapCourse")?.value||"", sub=$("#mapSubject")?.value||"";
+      document.querySelectorAll("[data-map-card]").forEach(card=>{
+        const ok=(!q||card.dataset.search.includes(q))&&(!c||card.dataset.course===c)&&(!sub||card.dataset.subject===sub);
+        card.classList.toggle("hidden",!ok);
+      });
+    };
+    $("#mapSearch")?.addEventListener("input",filterMaps); $("#mapCourse")?.addEventListener("change",filterMaps); $("#mapSubject")?.addEventListener("change",filterMaps);
+    document.querySelectorAll("[data-open-map]").forEach(b=>b.onclick=()=>{state.lessonId=b.dataset.openMap;state.view="lesson";state.tab="map";render()});
+    document.querySelectorAll("[data-edit-map]").forEach(b=>b.onclick=()=>{state.lessonId=b.dataset.editMap;state.view="lesson";state.tab="map";render()});
+    return;
+  }
+  let title=state.view==="lessons"?"Lezioni":"Quiz";
+  document.getElementById("root").innerHTML=layout(`<div class="section-head"><h2>${title}</h2></div><div class="panel">${d.lessons.length?d.lessons.map(lessonRow).join(""):`<div class="empty">Nessun contenuto disponibile.</div>`}</div>`);
+  bindCommon();bindRows()
+}
+render();
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
