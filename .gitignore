@@ -1,0 +1,12 @@
+
+.env
+.env.*
+!.env.example
+node_modules/
+studyai.sqlite
+studyai.sqlite-shm
+studyai.sqlite-wal
+uploads/
+uploads_test_14_7/
+coverage/
+npm-debug.log*
